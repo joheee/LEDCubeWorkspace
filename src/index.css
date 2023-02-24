@@ -5,6 +5,9 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
 }
 
 canvas {

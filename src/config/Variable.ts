@@ -1,1 +1,1 @@
-export const boxSize = 3
+export const boxSize = 1

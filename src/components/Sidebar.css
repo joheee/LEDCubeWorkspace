@@ -1,0 +1,27 @@
+.sidebar-container {
+    background-color: white;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+}
+
+.layer-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: .5rem;
+}
+
+.background-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.background-color-card {
+    padding: 1rem;
+    cursor: pointer
+}
