@@ -6,11 +6,11 @@ import { LayerTotal } from '../config/Mapping'
 import { IndexContext } from '../config/Context'
 
 export default function Sidebar(){
-    const [color, setcolor] = useState('#000000')
+    const [Color,setColor] = useState<string>('#000000')
 
     useEffect(() => {
-        document.body.style.backgroundColor = color
-    }, [color])
+        document.body.style.backgroundColor = Color
+    }, [Color])
 
     const indexContext = useContext(IndexContext)
 
@@ -31,13 +31,16 @@ export default function Sidebar(){
 
             <div className="flex-column-center">
                 <div className="">background color</div>
-                <HexColorPicker color={color} onChange={setcolor} />
+                <HexColorPicker color={Color} onChange={setColor} />
             </div>
 
+
             <div className='flex-column-center'>
-                <div className="">{indexContext.Opacity/100}</div>
+                <div className="">box opacity {indexContext.Opacity/100}</div>
                 <input type="range" value={indexContext.Opacity} onChange={e => indexContext.setOpacity!(Number(e.target.value))} min="0" max={OpacityMax}/>
             </div>
+
+            
         </div>
     )
 }
