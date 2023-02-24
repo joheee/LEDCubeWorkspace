@@ -4,9 +4,13 @@
     height: 100vh;
     z-index: 10;
     padding: .5rem;
+    gap: .5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.flex-column-center {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
     align-items: center;
 }
 

@@ -7,3 +7,5 @@ export const Layer = (z:number) => {
     }
     return arr
 }
+
+export const LayerTotal = [0,1,2,3,4,5,6,7]
