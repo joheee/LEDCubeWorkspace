@@ -10,6 +10,10 @@ body {
     overflow: hidden;
 }
 
+* {
+    box-sizing: border-box
+}
+
 canvas {
     width: 100vw;
     height: 100vh
@@ -23,11 +27,12 @@ canvas {
 
 .absolute-float {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 16px;
+    right: 16px;
     background-color: white;
     padding: 1rem;
     border-radius: .5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     gap:1rem;
 }
 
@@ -36,4 +41,45 @@ canvas {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+button:active {
+    background-color: lime
+}
+
+.sidebar-container {
+    background-color: white;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
+    padding: .5rem;
+    gap: .5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    min-width: 250px
+}
+
+.topbar-container {
+    background-color: white;
+    position: fixed;
+    top: 16px;
+    left: 266px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.grid-four-columns {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: .5rem;
+}
+
+.background-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.background-color-card {
+    padding: 1rem;
+    cursor: pointer
 }

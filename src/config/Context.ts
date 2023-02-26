@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity } from "./Variable";
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultOffset } from "./Variable";
 
 interface IndexContextInterface {
     Index:number,
@@ -11,7 +11,9 @@ interface IndexContextInterface {
     ColorBox:string,
     setColorBox?:(e:string) => void,
     BoxKey:string, 
-    setBoxKey?:(e:string) => void
+    setBoxKey?:(e:string) => void,
+    BoxOffset:number, 
+    setBoxOffset?:(e:number) => void
 }
 
 const defaultState = {
@@ -19,7 +21,8 @@ const defaultState = {
     Opacity:defaultBoxOpacity,
     IsBoxColor:defaultBoxColorOpened,
     ColorBox:defaultBoxColor,
-    BoxKey:defaultBoxKey
+    BoxKey:defaultBoxKey,
+    BoxOffset:defaultOffset
 }
 
 export const IndexContext = createContext<IndexContextInterface>(defaultState)

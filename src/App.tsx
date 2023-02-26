@@ -2,9 +2,10 @@ import { useState } from "react"
 import FloatingColor from "./components/FloatingColor"
 import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
+import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity } from "./config/Variable"
-import { useFetchLocalStorage } from "./hooks/CustomHooks"
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultOffset } from "./config/Variable"
+import { useKeyPressed } from "./hooks/CustomHooks"
 
 
 function App() {
@@ -14,12 +15,10 @@ function App() {
   const [IsBoxColor, setIsBoxColor] = useState<boolean>(defaultBoxColorOpened)
   const [ColorBox,setColorBox] = useState<string>(defaultBoxColor)
   const [BoxKey, setBoxKey] = useState<string>(defaultBoxKey)
-  
+  const [BoxOffset, setBoxOffset] = useState(defaultOffset)
+
   // RESET LOGIC FOR EACH VALUE OF THE BOXES
   console.log(`${BoxKey} and ${ColorBox} then ${IsBoxColor}`)
-
-  const {ColorValue} = useFetchLocalStorage('555')
-  console.log(ColorValue)
 
   const val = {
     Index, 
@@ -31,12 +30,15 @@ function App() {
     ColorBox,
     setColorBox,
     BoxKey, 
-    setBoxKey
+    setBoxKey,
+    BoxOffset, 
+    setBoxOffset
   }
 
   return (
     <IndexContext.Provider value={val}>
         <Sidebar/>
+        <Topbar/>
         <ThreeRender/>
         <FloatingColor/>
     </IndexContext.Provider>

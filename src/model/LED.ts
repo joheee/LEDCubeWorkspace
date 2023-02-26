@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { defaultBoxColor, hexBound } from "../config/Variable"
+import { hexBound } from "../config/Variable"
 
 export class LED {
     x:number
@@ -25,6 +24,14 @@ export class LED {
         }
     }
 
+    generateKey() {
+        let key = ''
+        key = key.concat(this.x.toString())
+        key = key.concat(this.y.toString())
+        key = key.concat(this.z.toString())
+        return key
+    }
+
     appendLocalStorage() {
         const rgb = this.extractRGB()
         const packageStructure = {
@@ -36,12 +43,14 @@ export class LED {
             'blue':rgb.blue,
             'hexColor':this.color
         }
-        let key = ''
-        key = key.concat(this.x.toString())
-        key = key.concat(this.y.toString())
-        key = key.concat(this.z.toString())
+        let key = this.generateKey()
         localStorage.setItem(key, JSON.stringify(packageStructure))
-        
         return `success add/update ${key} to local storage`
+    }
+
+    removeFromLocalStorage() {
+        let key = this.generateKey()
+        localStorage.removeItem(key)
+        return `success remove ${key} from local storage`
     }
 }
