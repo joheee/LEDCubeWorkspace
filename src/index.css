@@ -36,6 +36,13 @@ canvas {
     gap:1rem;
 }
 
+.flex-start-gap {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
 .flex-row-space-between {
     display: flex;
     justify-content: space-between;
@@ -43,8 +50,13 @@ canvas {
     width: 100%;
 }
 
+
 button:active {
-    background-color: lime
+    background-color: bisque
+}
+
+button:hover {
+    background-color: aquamarine
 }
 
 .sidebar-container {
@@ -66,6 +78,9 @@ button:active {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 1rem;
     border-radius: .5rem;
+    width: 50rem;
+    z-index: 10;
+    overflow-y: auto;
 }
 
 .grid-four-columns {
@@ -82,4 +97,11 @@ button:active {
 .background-color-card {
     padding: 1rem;
     cursor: pointer
+}
+
+.default-card {
+    padding: 1rem;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: .5rem;
 }

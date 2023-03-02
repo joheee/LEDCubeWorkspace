@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultOffset } from "./Variable";
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultOffset, defaultRefreshFrame } from "./Variable";
 
 interface IndexContextInterface {
     Index:number,
@@ -13,7 +13,13 @@ interface IndexContextInterface {
     BoxKey:string, 
     setBoxKey?:(e:string) => void,
     BoxOffset:number, 
-    setBoxOffset?:(e:number) => void
+    setBoxOffset?:(e:number) => void,
+    CurrFrame:number, 
+    setCurrFrame?:(e:number) => void,
+    RefreshFrame:boolean, 
+    setRefreshFrame?:(e:boolean) => void,
+    IsEightByEight:boolean, 
+    setIsEightByEight?:(e:boolean) => void
 }
 
 const defaultState = {
@@ -22,7 +28,10 @@ const defaultState = {
     IsBoxColor:defaultBoxColorOpened,
     ColorBox:defaultBoxColor,
     BoxKey:defaultBoxKey,
-    BoxOffset:defaultOffset
+    BoxOffset:defaultOffset,
+    CurrFrame:defaultCurrFrame,
+    RefreshFrame:defaultRefreshFrame,
+    IsEightByEight:defaultIsEightByEight
 }
 
 export const IndexContext = createContext<IndexContextInterface>(defaultState)

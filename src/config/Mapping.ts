@@ -1,7 +1,7 @@
-export const Layer = (z:number) => {
+export const Layer = (z:number, dimension:number) => {
     let arr = []
-    for(let x = 0; x<8; x++) {
-        for(let y = 0; y<8; y++) {
+    for(let x = 0; x<dimension; x++) {
+        for(let y = 0; y<dimension; y++) {
             arr.push([x,y,z])
         }
     }

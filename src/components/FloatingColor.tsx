@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react"
 import { HexColorPicker } from "react-colorful"
 import { IndexContext } from "../config/Context"
 import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey } from "../config/Variable"
-import { useFetchColorLocalStorage, useKeyPressed } from "../hooks/CustomHooks"
+import { useKeyPressed } from "../hooks/KeyPressed"
+import { useFetchColorLocalStorage } from "../hooks/LocalStorages"
 import { LED } from "../model/LED"
 
 export default function FloatingColor() {

@@ -6,9 +6,10 @@ export class LED {
     z:number
     color:string
     constructor(key:string, color:string) {
-        this.x = parseInt(key[0])
-        this.y = parseInt(key[1])
-        this.z = parseInt(key[2])
+        const keyArr = key.split('-')
+        this.x = parseInt(keyArr[0])
+        this.y = parseInt(keyArr[1])
+        this.z = parseInt(keyArr[2])
         this.color = color
     }
     
@@ -25,9 +26,10 @@ export class LED {
     }
 
     generateKey() {
-        let key = ''
-        key = key.concat(this.x.toString())
+        let key = ''.concat(this.x.toString())
+        key = key.concat('-')
         key = key.concat(this.y.toString())
+        key = key.concat('-')
         key = key.concat(this.z.toString())
         return key
     }

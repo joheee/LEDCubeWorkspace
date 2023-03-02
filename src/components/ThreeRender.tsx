@@ -14,7 +14,7 @@ interface DisplayLayerInterface {
 function DisplayLayer(prop:DisplayLayerInterface) {
   return <>
     {
-      Layer(prop.index).map((item, i) => (
+      Layer(prop.index, 16).map((item, i) => (
         <Box isFull={prop.isFull} position={[item[0]*boxSize,item[1]*boxSize,item[2]*boxSize]} key={i}/>
       ))
     }
