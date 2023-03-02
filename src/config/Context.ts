@@ -1,6 +1,11 @@
 import { createContext } from "react";
 import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultOffset, defaultRefreshFrame } from "./Variable";
 
+interface FrameInterface {
+    Frames:never[],
+    refetch:()=>void
+}
+
 interface IndexContextInterface {
     Index:number,
     setIndex?:(e:number) => void,
@@ -19,7 +24,9 @@ interface IndexContextInterface {
     RefreshFrame:boolean, 
     setRefreshFrame?:(e:boolean) => void,
     IsEightByEight:boolean, 
-    setIsEightByEight?:(e:boolean) => void
+    setIsEightByEight?:(e:boolean) => void,
+    frameEight?: FrameInterface,
+    frameSixteen?: FrameInterface,
 }
 
 const defaultState = {

@@ -1,4 +1,6 @@
-import { FRAME_8_KEY } from "../config/Variable"
+import { useContext } from "react"
+import { IndexContext } from "../config/Context"
+import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 import { useFetchFramesLocalStorage } from "../hooks/LocalStorages"
 
 interface TopBarCardInterface {
@@ -15,30 +17,47 @@ function TopBarCard(prop:TopBarCardInterface) {
 
 export default function Topbar() {
     
-    const {Frames, refetch} = useFetchFramesLocalStorage(FRAME_8_KEY)
+    const indexContext = useContext(IndexContext)
+    const frameEight = indexContext.frameEight!
+    const frameSixteen = indexContext.frameSixteen!
+
+    function injectFrame(frame:string, arr:never[]){
+        if(arr.length === 0) localStorage.setItem(frame, JSON.stringify([0]))
+        else {
+            let res = []
+            arr.forEach(item => {
+                res.push(item)
+            })
+            res.push(arr.length)
+
+            localStorage.setItem(frame,JSON.stringify(res))
+        }
+    }
 
     function handleCreateFrame() {
-        if(Frames.length === 0) {
-            localStorage.setItem(FRAME_8_KEY, JSON.stringify([0]))
-        } else {
-            let arr = []
-            Frames.forEach(item => {
-                arr.push(item)
-            })
-            arr.push(Frames.length)
-            localStorage.setItem(FRAME_8_KEY,JSON.stringify(arr))
+        if(indexContext.IsEightByEight) {
+            injectFrame(FRAME_8_KEY, frameEight.Frames) 
+            frameEight.refetch()
         }
-        refetch()
+        else {
+            injectFrame(FRAME_16_KEY, frameSixteen.Frames)
+            frameSixteen.refetch()
+        }
     } 
 
     return (
         <div className="topbar-container flex-start-gap">
             {
-                Frames.map((item,i) => (
+                indexContext.IsEightByEight ? 
+                frameEight.Frames.map((item,i) => (
+                    <TopBarCard key={i} index={item}/>
+                ))
+                :
+                frameSixteen.Frames.map((item,i) => (
                     <TopBarCard key={i} index={item}/>
                 ))
             }
-            <button className="" onClick={handleCreateFrame}>+</button>
+            <button onClick={handleCreateFrame}>+</button>
         </div>
     )
 }

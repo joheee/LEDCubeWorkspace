@@ -50,6 +50,13 @@ canvas {
     width: 100%;
 }
 
+.flex-row-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
 
 button:active {
     background-color: bisque

@@ -4,7 +4,8 @@ import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultOffset, defaultRefreshFrame } from "./config/Variable"
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
   const [CurrFrame, setCurrFrame] = useState<number>(defaultCurrFrame)
   const [RefreshFrame, setRefreshFrame] = useState<boolean>(defaultRefreshFrame)
 
+  // GET ALL POSSIBLE FRAMES
+  const frameEight = useFetchFramesLocalStorage(FRAME_8_KEY)
+  const frameSixteen = useFetchFramesLocalStorage(FRAME_16_KEY)
+
   const val = {
     Index, 
     setIndex, 
@@ -42,7 +47,9 @@ function App() {
     RefreshFrame, 
     setRefreshFrame,
     IsEightByEight, 
-    setIsEightByEight
+    setIsEightByEight,
+    frameEight,
+    frameSixteen
   }
 
   return (
