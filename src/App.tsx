@@ -1,10 +1,11 @@
 import { useState } from "react"
 import FloatingColor from "./components/FloatingColor"
+import { PhotoModal } from "./components/PhotoModal"
 import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
 
@@ -29,6 +30,9 @@ function App() {
   const frameEight = useFetchFramesLocalStorage(FRAME_8_KEY)
   const frameSixteen = useFetchFramesLocalStorage(FRAME_16_KEY)
 
+  // PHOTO MODAL
+  const [isPhotoModal, setIsPhotoModal] = useState<boolean>(defaultIsPhotoModal)
+
   const val = {
     Index, 
     setIndex, 
@@ -49,11 +53,14 @@ function App() {
     IsEightByEight, 
     setIsEightByEight,
     frameEight,
-    frameSixteen
+    frameSixteen,
+    isPhotoModal, 
+    setIsPhotoModal
   }
 
   return (
     <IndexContext.Provider value={val}>
+        <PhotoModal/>
         <Sidebar/>
         <Topbar/>
         <ThreeRender/>

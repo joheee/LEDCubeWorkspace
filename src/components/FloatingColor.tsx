@@ -16,13 +16,13 @@ export default function FloatingColor() {
     const handleClickSave = () => {
         indexContext.setColorBox!(ColorInput)
         const currentSavedColor = new LED(indexContext.BoxKey, ColorInput)
-        currentSavedColor.appendLocalStorage()
+        currentSavedColor.appendLocalStorage(indexContext.CurrFrame, indexContext.IsEightByEight, indexContext.IsEightByEight ? indexContext.frameEight?.Frames! : indexContext.frameSixteen?.Frames!)
         handleClickExit()
     }
 
     const handleClickRemove = () => {
         const currentSavedColor = new LED(indexContext.BoxKey, ColorValue!)
-        currentSavedColor.removeFromLocalStorage()
+        currentSavedColor.removeFromLocalStorage(indexContext.CurrFrame, indexContext.IsEightByEight, indexContext.IsEightByEight ? indexContext.frameEight?.Frames! : indexContext.frameSixteen?.Frames!)
         handleClickExit()
     }
 
@@ -31,6 +31,8 @@ export default function FloatingColor() {
         indexContext.setColorBox!(defaultBoxColor)
         indexContext.setBoxKey!(defaultBoxKey)
         setColorInput(defaultBoxColor)
+        indexContext.frameEight?.refetch()
+        indexContext.frameSixteen?.refetch()
     }
 
 

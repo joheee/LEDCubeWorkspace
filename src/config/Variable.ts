@@ -11,6 +11,8 @@ export const defaultBoxKey = '999'
 export const defaultBoxOpacityMax = 100
 export const defaultBoxOpacityOffset = 50
 
+export const defaultIsPhotoModal = false
+
 export const hexBound = 16
 
 // SET IF 8X8X8 OR 16X16X16

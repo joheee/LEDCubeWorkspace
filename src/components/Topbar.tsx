@@ -1,16 +1,14 @@
 import { useContext } from "react"
 import { IndexContext } from "../config/Context"
 import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
-import { useFetchFramesLocalStorage } from "../hooks/LocalStorages"
+import { BoxFrameInterface } from "../hooks/LocalStorages"
 
-interface TopBarCardInterface {
-    index:number
-}
 
-function TopBarCard(prop:TopBarCardInterface) {
+function TopBarCard(prop:BoxFrameInterface) {
+    const indexContext = useContext(IndexContext)
     return (
-        <button className="">
-            {prop.index}
+        <button onClick={() => indexContext.setCurrFrame!(prop.frame)}>
+            {prop.frame}
         </button>
     )
 }
@@ -21,15 +19,14 @@ export default function Topbar() {
     const frameEight = indexContext.frameEight!
     const frameSixteen = indexContext.frameSixteen!
 
-    function injectFrame(frame:string, arr:never[]){
-        if(arr.length === 0) localStorage.setItem(frame, JSON.stringify([0]))
+    function injectFrame(frame:string, arr:BoxFrameInterface[]){
+        if(arr.length === 0) localStorage.setItem(frame, JSON.stringify([{frame:0}]))
         else {
-            let res = []
+            let res = [] as BoxFrameInterface[]
             arr.forEach(item => {
                 res.push(item)
             })
-            res.push(arr.length)
-
+            res.push({frame:arr.length})
             localStorage.setItem(frame,JSON.stringify(res))
         }
     }
@@ -50,11 +47,11 @@ export default function Topbar() {
             {
                 indexContext.IsEightByEight ? 
                 frameEight.Frames.map((item,i) => (
-                    <TopBarCard key={i} index={item}/>
+                    <TopBarCard key={i} frame={item.frame}/>
                 ))
                 :
                 frameSixteen.Frames.map((item,i) => (
-                    <TopBarCard key={i} index={item}/>
+                    <TopBarCard key={i} frame={item.frame}/>
                 ))
             }
             <button onClick={handleCreateFrame}>+</button>

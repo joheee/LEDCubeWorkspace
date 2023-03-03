@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import { boxSize, defaultBoxColor, defaultBoxOpacityMax, defaultBoxOpacityOffset, defaultOffset } from '../config/Variable'
 import { IndexContext } from '../config/Context'
 import { Vector3 } from 'three'
 import { useFetchColorLocalStorage } from '../hooks/LocalStorages'
-
+import { Edges } from '@react-three/drei'
 
 
 interface BoxItemInterface {
@@ -26,7 +26,6 @@ export default function Box(props: BoxItemInterface) {
   
   const key = generateKey([props.position[0], props.position[1], props.position[2]])
   const {ColorValue} = useFetchColorLocalStorage(key)
-  // console.log(key)
 
   const handleClick =()=> {
     if(!props.isFull) {
@@ -34,8 +33,11 @@ export default function Box(props: BoxItemInterface) {
       indexContext.setBoxKey!(key)
     }
   }
+
+  const boxRef = useRef<any>()
+  
   return (
-    <mesh
+    <mesh ref={boxRef}
       position={position}
       onClick={handleClick}>
       <boxGeometry args={[boxSize, boxSize, boxSize]} attach='geometry'/>

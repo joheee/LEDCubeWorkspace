@@ -1,4 +1,5 @@
-import { hexBound } from "../config/Variable"
+import { FRAME_16_KEY, FRAME_8_KEY, hexBound } from "../config/Variable"
+import { BoxFrameInterface, BoxInterface } from "../hooks/LocalStorages"
 
 export class LED {
     x:number
@@ -34,7 +35,7 @@ export class LED {
         return key
     }
 
-    appendLocalStorage() {
+    appendLocalStorage(currFrame:number, iSeight:boolean, array:BoxFrameInterface[]) {
         const rgb = this.extractRGB()
         const packageStructure = {
             'x':this.x,
@@ -46,13 +47,42 @@ export class LED {
             'hexColor':this.color
         }
         let key = this.generateKey()
-        localStorage.setItem(key, JSON.stringify(packageStructure))
+        let box = {
+            boxKey : key,
+            attribute : packageStructure
+        }
+        const findArrayIndex = array.findIndex(item => item.frame === currFrame)
+        const findBoxIndex = array[findArrayIndex].box?.findIndex(box => box.boxKey === key)
+        if(array[findArrayIndex].box?.length === 0 || array[findArrayIndex].box === undefined) {
+            array[findArrayIndex].box! = [box]
+        } else if(findBoxIndex !== -1) {
+            array[findArrayIndex].box![findBoxIndex!].attribute = {
+                x:this.x,
+                y:this.y,
+                z:this.z,
+                red:rgb.red,
+                green:rgb.green,
+                blue:rgb.blue,
+                hexColor:this.color
+            }
+        }
+        else {
+            array[findArrayIndex].box?.push(box)
+        }
+        iSeight ? localStorage.setItem(FRAME_8_KEY, JSON.stringify(array)) : localStorage.setItem(FRAME_16_KEY, JSON.stringify(array))
+        
         return `success add/update ${key} to local storage`
     }
-
-    removeFromLocalStorage() {
+    
+    removeFromLocalStorage(currFrame:number, iSeight:boolean, array:BoxFrameInterface[]) {
         let key = this.generateKey()
-        localStorage.removeItem(key)
+        const findArrayIndex = array.findIndex(item => item.frame === currFrame)
+        const findBoxIndex = array[findArrayIndex].box?.findIndex(box => box.boxKey === key)
+    
+        if(findBoxIndex === undefined) return 
+        console.log(array[findArrayIndex].box)
+        // iSeight ? localStorage.setItem(FRAME_8_KEY, JSON.stringify(array)) : localStorage.setItem(FRAME_16_KEY, JSON.stringify(array))
+        
         return `success remove ${key} from local storage`
     }
 }

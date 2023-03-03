@@ -1,6 +1,6 @@
-import { OrbitControls } from "@react-three/drei";
-import { Canvas} from "@react-three/fiber";
-import { useContext } from "react";
+import { OrbitControls, PerformanceMonitor} from "@react-three/drei";
+import { Canvas, useThree} from "@react-three/fiber";
+import { useContext, useEffect, useRef, useState } from "react";
 import Box from "../anim/BoxItem";
 import { IndexContext } from "../config/Context";
 import { Layer, LayerTotalEight, LayerTotalSixteen,  } from "../config/Mapping";
@@ -23,6 +23,16 @@ function DisplayLayer(prop:DisplayLayerInterface) {
   </>
 }
 
+function Controls() {
+  const ref = useRef<any>()
+  const { invalidate, camera, gl } = useThree()
+  useEffect(() => {
+    ref.current.addEventListener('change', invalidate)
+    return () => ref.current.removeEventListener('change', invalidate)
+  }, [])
+  return <OrbitControls ref={ref} args={[camera, gl.domElement]} />
+}
+
 export default function ThreeRender() {
 
   const indexContext = useContext(IndexContext)
@@ -32,27 +42,28 @@ export default function ThreeRender() {
     <>
       <Canvas orthographic camera={{zoom:25}}>
           <ambientLight intensity={0.5}/>
-          <OrbitControls/>
-          {
-            indexContext.IsEightByEight ? 
+          <Controls />
 
-            frameEight.Frames.length === 0 ? null : 
-            (
+            {
+              indexContext.IsEightByEight ? 
+              
+              frameEight.Frames.length === 0 ? null : 
+              (
               indexContext.Index === 8 ? 
               LayerTotalEight.map(i => (<DisplayLayer index={i} dimension={8} isFull={true} key={i}/>)) 
               : 
               <DisplayLayer dimension={8} index={indexContext.Index} isFull={false}/> 
-            )
+              )
               
-            :
-            frameSixteen.Frames.length === 0 ? null :
-            (
-              indexContext.Index === 16 ? 
-              LayerTotalSixteen.map(i => (<DisplayLayer index={i} dimension={16} isFull={true} key={i}/>)) 
-              : 
-              <DisplayLayer dimension={16} index={indexContext.Index} isFull={false}/>
-            )
-          }
+              :
+              frameSixteen.Frames.length === 0 ? null :
+              (
+                indexContext.Index === 16 ? 
+                LayerTotalSixteen.map(i => (<DisplayLayer index={i} dimension={16} isFull={true} key={i}/>)) 
+                : 
+                <DisplayLayer dimension={16} index={indexContext.Index} isFull={false}/>
+                )
+              }
       </Canvas>
     </>
   )
