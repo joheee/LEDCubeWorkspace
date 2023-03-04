@@ -4,7 +4,7 @@ import { IndexContext } from "../config/Context"
 export function PhotoModal() {
     const indexContext = useContext(IndexContext)
     return (
-        indexContext.isPhotoModal ? null :
+        !indexContext.isPhotoModal ? null :
         <div className="modal-container">
             <div className="default-card flex-column-center photo-container">
                 <div className="flex-row-space-between">

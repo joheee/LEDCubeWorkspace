@@ -80,8 +80,8 @@ export class LED {
         const findBoxIndex = array[findArrayIndex].box?.findIndex(box => box.boxKey === key)
     
         if(findBoxIndex === undefined) return 
-        console.log(array[findArrayIndex].box)
-        // iSeight ? localStorage.setItem(FRAME_8_KEY, JSON.stringify(array)) : localStorage.setItem(FRAME_16_KEY, JSON.stringify(array))
+        array[findArrayIndex].box! = array[findArrayIndex].box!.filter(item => item.boxKey !== key)
+        iSeight ? localStorage.setItem(FRAME_8_KEY, JSON.stringify(array)) : localStorage.setItem(FRAME_16_KEY, JSON.stringify(array))
         
         return `success remove ${key} from local storage`
     }

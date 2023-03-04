@@ -23,15 +23,6 @@ function DisplayLayer(prop:DisplayLayerInterface) {
   </>
 }
 
-function Controls() {
-  const ref = useRef<any>()
-  const { invalidate, camera, gl } = useThree()
-  useEffect(() => {
-    ref.current.addEventListener('change', invalidate)
-    return () => ref.current.removeEventListener('change', invalidate)
-  }, [])
-  return <OrbitControls ref={ref} args={[camera, gl.domElement]} />
-}
 
 export default function ThreeRender() {
 
@@ -42,7 +33,7 @@ export default function ThreeRender() {
     <>
       <Canvas orthographic camera={{zoom:25}}>
           <ambientLight intensity={0.5}/>
-          <Controls />
+          <OrbitControls/>
 
             {
               indexContext.IsEightByEight ? 

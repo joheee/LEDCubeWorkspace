@@ -2,12 +2,13 @@ import { useContext } from "react"
 import { IndexContext } from "../config/Context"
 import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 import { BoxFrameInterface } from "../hooks/LocalStorages"
+import { usePlayFrame } from "../hooks/PlayFrame"
 
 
 function TopBarCard(prop:BoxFrameInterface) {
     const indexContext = useContext(IndexContext)
     return (
-        <button onClick={() => indexContext.setCurrFrame!(prop.frame)}>
+        <button className={`${indexContext.CurrFrame === prop.frame ? 'button-active' : null}`} onClick={() => indexContext.setCurrFrame!(prop.frame)}>
             {prop.frame}
         </button>
     )
@@ -42,19 +43,29 @@ export default function Topbar() {
         }
     } 
 
+    const {triggerPlay} = usePlayFrame(100);
+    function handlePlayFrame() {
+        triggerPlay()
+    }
+
     return (
         <div className="topbar-container flex-start-gap">
-            {
-                indexContext.IsEightByEight ? 
-                frameEight.Frames.map((item,i) => (
-                    <TopBarCard key={i} frame={item.frame}/>
-                ))
-                :
-                frameSixteen.Frames.map((item,i) => (
-                    <TopBarCard key={i} frame={item.frame}/>
-                ))
-            }
-            <button onClick={handleCreateFrame}>+</button>
+            <div className="topbar-card">
+                {
+                    indexContext.IsEightByEight ? 
+                    frameEight.Frames.map((item,i) => (
+                        <TopBarCard key={i} frame={item.frame}/>
+                        ))
+                    :
+                    frameSixteen.Frames.map((item,i) => (
+                        <TopBarCard key={i} frame={item.frame}/>
+                        ))
+                }
+            </div>
+            <div className="topbar-card">
+                <button onClick={handleCreateFrame}>+</button>
+                <button onClick={() => handlePlayFrame()}>play</button>
+            </div>
         </div>
     )
 }

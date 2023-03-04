@@ -16,4 +16,4 @@ export function useKeyPressed(keyPress:string, type:string){
     useEffect(()=>{
         window.addEventListener(type, handleKeyPressed)
     },[])
-}
+}   

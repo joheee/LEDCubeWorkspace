@@ -72,6 +72,10 @@ button:hover {
     background-color: aquamarine
 }
 
+.button-active {
+    background-color: aquamarine
+}
+
 .sidebar-container {
     background-color: white;
     position: fixed;
@@ -84,15 +88,20 @@ button:hover {
 }
 
 .topbar-container {
-    background-color: white;
     position: fixed;
     top: 16px;
     left: 266px;
+    z-index: 10;
+    width: 50rem;
+}
+
+.topbar-card {
+    background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 1rem;
     border-radius: .5rem;
-    width: 50rem;
-    z-index: 10;
+    display: flex;
+    gap: 1rem;
 }
 
 .grid-four-columns {
