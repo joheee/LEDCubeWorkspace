@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { IndexContext } from "../config/Context"
-import { defaultBoxColor, defaultFrameArray, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
+import { BACKGROUND_COLOR, defaultBackroundColor, defaultBoxColor, defaultFrameArray, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 
 export interface BoxAttributeInterface {
     x: number,
@@ -62,4 +62,20 @@ export function useFetchFramesLocalStorage(key:string){
     },[getLocalStorage, reset])
     
     return {Frames, refetch}
+}
+
+export function useFetchBackground() {
+    const indexContext = useContext(IndexContext)
+    const getBackgroundColor = localStorage.getItem(BACKGROUND_COLOR)
+    useEffect(() => {
+        if(getBackgroundColor === null) localStorage.setItem(BACKGROUND_COLOR, indexContext.ColorBackground)
+        else indexContext.setColorBackground!(getBackgroundColor)
+    }, [])
+
+    useEffect(() => {
+            if(indexContext.ColorBackground !== defaultBackroundColor) localStorage.setItem(BACKGROUND_COLOR, indexContext.ColorBackground)
+            const getBackgroundColor = localStorage.getItem(BACKGROUND_COLOR)
+        indexContext.setColorBackground!(getBackgroundColor!)
+        console.log('testing')
+    }, [indexContext.ColorBackground])
 }

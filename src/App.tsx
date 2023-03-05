@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
 
@@ -33,6 +33,9 @@ function App() {
   // PHOTO MODAL
   const [isPhotoModal, setIsPhotoModal] = useState<boolean>(defaultIsPhotoModal)
 
+  // BACKGROUND COLOR
+  const [ColorBackground,setColorBackground] = useState<string>(defaultBackroundColor)
+
   const val = {
     Index, 
     setIndex, 
@@ -55,7 +58,9 @@ function App() {
     frameEight,
     frameSixteen,
     isPhotoModal, 
-    setIsPhotoModal
+    setIsPhotoModal,
+    ColorBackground,
+    setColorBackground
   }
 
   return (
