@@ -11,7 +11,10 @@ export default function FloatingColor() {
     const indexContext = useContext(IndexContext)
     const [ColorInput, setColorInput] = useState(defaultBoxColor)
     const {ColorValue} = useFetchColorLocalStorage(indexContext.BoxKey)    
-    useKeyPressed('Escape', 'keydown')
+    
+    useKeyPressed('Escape', 'keydown', () => {
+        indexContext.setIsBoxColor!(defaultBoxColorOpened)
+    })
 
     const handleClickSave = () => {
         indexContext.setColorBox!(ColorInput)
@@ -27,7 +30,7 @@ export default function FloatingColor() {
     }
 
     const handleClickExit = () => {
-        indexContext.setIsBoxColor!(defaultBoxColorOpened)        
+        indexContext.setIsBoxColor!(defaultBoxColorOpened)
         indexContext.setColorBox!(defaultBoxColor)
         indexContext.setBoxKey!(defaultBoxKey)
         setColorInput(defaultBoxColor)

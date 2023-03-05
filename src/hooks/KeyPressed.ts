@@ -1,15 +1,12 @@
 import { useContext, useEffect } from "react"
 import { IndexContext } from "../config/Context"
-import { defaultBoxColorOpened } from "../config/Variable"
 
 
-export function useKeyPressed(keyPress:string, type:string){
+export function useKeyPressed(keyPress:string, type:string, func:() => void){
     
-    const indexContext = useContext(IndexContext)
-
     const handleKeyPressed = ({key}:any) => {
         if(key === keyPress) {
-            indexContext.setIsBoxColor!(defaultBoxColorOpened)       
+            func()
         }
     }
 

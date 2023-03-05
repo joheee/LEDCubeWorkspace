@@ -1,8 +1,14 @@
 import { useContext } from "react"
 import { IndexContext } from "../config/Context"
+import { defaultIsPhotoModal } from "../config/Variable"
+import { useKeyPressed } from "../hooks/KeyPressed"
 
 export function PhotoModal() {
     const indexContext = useContext(IndexContext)
+    useKeyPressed('Escape','keydown', () => {
+        indexContext.setIsPhotoModal!(defaultIsPhotoModal)
+    })
+
     return (
         !indexContext.isPhotoModal ? null :
         <div className="modal-container">
