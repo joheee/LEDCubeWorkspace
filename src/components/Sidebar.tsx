@@ -2,21 +2,36 @@ import { HexColorPicker } from "react-colorful"
 import { useContext, useEffect, useState } from "react"
 import { LayerTotalEight, LayerTotalSixteen } from "../config/Mapping"
 import { IndexContext } from "../config/Context"
-import {
-  defaultBackroundColor,
-  defaultBoxOpacityMax,
-  maxOffset,
-} from "../config/Variable"
-import { useFetchBackground } from "../hooks/LocalStorages"
-import { BACKGROUND_COLOR } from "../config/Variable"
+import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset} from "../config/Variable"
+import { useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
 
 export default function Sidebar() {
 
   const indexContext = useContext(IndexContext)
-  useFetchBackground()
 
-  if(localStorage.getItem(BACKGROUND_COLOR) !== defaultBackroundColor) localStorage.setItem(BACKGROUND_COLOR, localStorage.getItem(BACKGROUND_COLOR)!)
-  else localStorage.setItem(BACKGROUND_COLOR, defaultBackroundColor)
+  // FETCH BACKGROUND
+  useFetchDynamicLocalStorage({
+    localStorageKey:DEFAULT_BACKGROUND_COLOR_KEY,
+    state:indexContext.ColorBackground,
+    setState:indexContext.setColorBackground!,
+    defaultValue:defaultBackroundColor
+  })
+  
+  // FETCH OPACITY
+  useFetchDynamicLocalStorage({
+    localStorageKey:DEFAULT_OPACITY_KEY,
+    state:indexContext.Opacity,
+    setState:indexContext.setOpacity!,
+    defaultValue:defaultBoxOpacity
+  })
+
+  // FETCH BOX SPACING
+  useFetchDynamicLocalStorage({
+    localStorageKey:DEFAULT_BOX_SPACING_KEY,
+    state:indexContext.BoxOffset,
+    setState:indexContext.setBoxOffset!,
+    defaultValue:defaultOffset
+  })
 
   useEffect(() => {
     document.body.style.backgroundColor = indexContext.ColorBackground

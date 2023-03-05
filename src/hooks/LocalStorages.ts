@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { IndexContext } from "../config/Context"
-import { BACKGROUND_COLOR, defaultBackroundColor, defaultBoxColor, defaultFrameArray, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
+import { defaultBoxColor, defaultFrameArray, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 
 export interface BoxAttributeInterface {
     x: number,
@@ -64,18 +64,23 @@ export function useFetchFramesLocalStorage(key:string){
     return {Frames, refetch}
 }
 
-export function useFetchBackground() {
-    const indexContext = useContext(IndexContext)
-    const getBackgroundColor = localStorage.getItem(BACKGROUND_COLOR)
+interface FetchLocalDynamicInterface {
+    localStorageKey:string,
+    state:any,
+    setState:(e:any) => void,
+    defaultValue:any,
+}
+
+export function useFetchDynamicLocalStorage(prop:FetchLocalDynamicInterface) {
+    const getBackgroundColor = localStorage.getItem(prop.localStorageKey)
     useEffect(() => {
-        if(getBackgroundColor === null) localStorage.setItem(BACKGROUND_COLOR, indexContext.ColorBackground)
-        else indexContext.setColorBackground!(getBackgroundColor)
+        if(getBackgroundColor === null) localStorage.setItem(prop.localStorageKey, prop.state.toString())
+        else prop.setState!(getBackgroundColor)
     }, [])
 
     useEffect(() => {
-            if(indexContext.ColorBackground !== defaultBackroundColor) localStorage.setItem(BACKGROUND_COLOR, indexContext.ColorBackground)
-            const getBackgroundColor = localStorage.getItem(BACKGROUND_COLOR)
-        indexContext.setColorBackground!(getBackgroundColor!)
-        console.log('testing')
-    }, [indexContext.ColorBackground])
+            if(prop.state !== prop.defaultValue) localStorage.setItem(prop.localStorageKey, prop.state.toString())
+            const getBackgroundColor = localStorage.getItem(prop.localStorageKey)
+        prop.setState!(getBackgroundColor!)
+    }, [prop.state])
 }

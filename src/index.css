@@ -90,19 +90,19 @@ button:hover {
 
 .topbar-container {
     position: fixed;
-    top: 16px;
-    left: 266px;
+    left: 250px;
     z-index: 10;
     width: 50rem;
+    padding: 1rem;
 }
 
 .topbar-card {
     background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 1rem;
     border-radius: .5rem;
     display: flex;
     gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .grid-four-columns {
