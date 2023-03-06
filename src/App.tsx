@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
 function App() {
@@ -35,6 +35,9 @@ function App() {
   // BACKGROUND COLOR
   const [ColorBackground,setColorBackground] = useState<string>(defaultBackroundColor)
 
+  const [IsDeleteShortCut, setIsDeleteShortCut] = useState<boolean>(defaultDeleteShortCut)
+  const [IsBoxSelected, setIsBoxSelected] = useState<boolean>(defaultIsBoxSelected)
+
   const val = {
     Index, 
     setIndex, 
@@ -59,7 +62,11 @@ function App() {
     isPhotoModal, 
     setIsPhotoModal,
     ColorBackground,
-    setColorBackground
+    setColorBackground,
+    IsDeleteShortCut, 
+    setIsDeleteShortCut,
+    IsBoxSelected, 
+    setIsBoxSelected
   }
 
   return (

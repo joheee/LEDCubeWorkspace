@@ -1,5 +1,5 @@
-import { useContext, useRef } from 'react'
-import { boxSize, defaultBoxColor, defaultBoxOpacityMax, defaultBoxOpacityOffset, defaultOffset } from '../config/Variable'
+import { useContext, useEffect, useRef } from 'react'
+import { boxSize, defaultBoxColor, defaultBoxOpacityMax, defaultBoxOpacityOffset, defaultEightBound, defaultOffset, defaultSixteenBound } from '../config/Variable'
 import { IndexContext } from '../config/Context'
 import { Vector3 } from 'three'
 import { useFetchColorLocalStorage } from '../hooks/LocalStorages'
@@ -26,10 +26,12 @@ export default function Box(props: BoxItemInterface) {
   const key = generateKey([props.position[0], props.position[1], props.position[2]])
   const {ColorValue} = useFetchColorLocalStorage(key)
 
+
   const handleClick =()=> {
     if(!props.isFull) {
       indexContext.setIsBoxColor!(true)
       indexContext.setBoxKey!(key)
+      indexContext.setIsBoxSelected!(true)
     }
   }
 

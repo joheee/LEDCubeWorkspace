@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Box from "../anim/BoxItem";
 import { IndexContext } from "../config/Context";
 import { Layer, LayerTotalEight, LayerTotalSixteen,  } from "../config/Mapping";
-import { boxSize, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
+import { boxSize, defaultEightBound, defaultSixteenBound, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
 import { useFetchFramesLocalStorage } from "../hooks/LocalStorages";
 
 interface DisplayLayerInterface {
@@ -40,19 +40,19 @@ export default function ThreeRender() {
               
               frameEight.Frames.length === 0 ? null : 
               (
-              indexContext.Index === 8 ? 
-              LayerTotalEight.map(i => (<DisplayLayer index={i} dimension={8} isFull={true} key={i}/>)) 
+              indexContext.Index === defaultEightBound ? 
+              LayerTotalEight.map(i => (<DisplayLayer index={i} dimension={defaultEightBound} isFull={true} key={i}/>)) 
               : 
-              <DisplayLayer dimension={8} index={indexContext.Index} isFull={false}/> 
+              <DisplayLayer dimension={defaultEightBound} index={indexContext.Index} isFull={false}/> 
               )
               
               :
               frameSixteen.Frames.length === 0 ? null :
               (
-                indexContext.Index === 16 ? 
-                LayerTotalSixteen.map(i => (<DisplayLayer index={i} dimension={16} isFull={true} key={i}/>)) 
+                indexContext.Index === defaultSixteenBound ? 
+                LayerTotalSixteen.map(i => (<DisplayLayer index={i} dimension={defaultSixteenBound} isFull={true} key={i}/>)) 
                 : 
-                <DisplayLayer dimension={16} index={indexContext.Index} isFull={false}/>
+                <DisplayLayer dimension={defaultSixteenBound} index={indexContext.Index} isFull={false}/>
                 )
               }
       </Canvas>
