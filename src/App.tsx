@@ -8,7 +8,6 @@ import { IndexContext } from "./config/Context"
 import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
-
 function App() {
 
   // IS THERE 8X8X8 OR 16X16X16

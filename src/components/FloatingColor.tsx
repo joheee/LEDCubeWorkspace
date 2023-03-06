@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { HexColorPicker } from "react-colorful"
 import { IndexContext } from "../config/Context"
 import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey } from "../config/Variable"
@@ -11,11 +11,16 @@ export default function FloatingColor() {
     const indexContext = useContext(IndexContext)
     const [ColorInput, setColorInput] = useState(defaultBoxColor)
     const {ColorValue} = useFetchColorLocalStorage(indexContext.BoxKey)    
-    
-    useKeyPressed('Escape', 'keydown', () => {
-        indexContext.setIsBoxColor!(defaultBoxColorOpened)
-    })
 
+    useKeyPressed('keydown', 
+        useCallback((e:any) => {
+            const buff = e as KeyboardEvent
+            if(buff.key === 'Escape') {
+                indexContext.setIsBoxColor!(defaultBoxColorOpened)
+            }
+        },[])
+    )
+    
     const handleClickSave = () => {
         indexContext.setColorBox!(ColorInput)
         const currentSavedColor = new LED(indexContext.BoxKey, ColorInput)
@@ -48,11 +53,11 @@ export default function FloatingColor() {
             <HexColorPicker color={ColorInput} onChange={setColorInput} />
             <input className="input-styling" type='text' value={ColorInput} onChange={(e)=>setColorInput(e.target.value)}/>
             <div className="flex-row-space-between">
+                <button onClick={handleClickSave}>save</button>
                 {
                     ColorValue === null ? null :
                     <button onClick={handleClickRemove}>remove</button>
                 }
-                <button onClick={handleClickSave}>save</button>
             </div>
         </div>
 }

@@ -7,7 +7,7 @@ interface FrameInterface {
     refetch:()=>void
 }
 
-interface IndexContextInterface {
+export interface IndexContextInterface {
     Index:number,
     setIndex?:(e:number) => void,
     Opacity:number,

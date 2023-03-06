@@ -3,7 +3,6 @@ import { boxSize, defaultBoxColor, defaultBoxOpacityMax, defaultBoxOpacityOffset
 import { IndexContext } from '../config/Context'
 import { Vector3 } from 'three'
 import { useFetchColorLocalStorage } from '../hooks/LocalStorages'
-import { Edges } from '@react-three/drei'
 
 
 interface BoxItemInterface {

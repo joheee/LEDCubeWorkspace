@@ -102,15 +102,15 @@ export default function Sidebar() {
           <div className="">
             current cube {indexContext.IsEightByEight ? "8 by 8" : "16 by 16"}
           </div>
-          <div className="flex-row-center">
-            <button onClick={handleEight}>8 x 8 x 8</button>
-            <button onClick={handleSixteen}>16 x 16 x 16</button>
+          <div className="flex-row-center"> 
+            <button  onClick={handleEight} className={`${indexContext.IsEightByEight ? 'button-active' : null}`} >8 x 8 x 8</button>
+            <button onClick={handleSixteen} className={`${!indexContext.IsEightByEight ? 'button-active' : null}`} >16 x 16 x 16</button>
           </div>
 
           <div className="">layer {indexContext.Index + 1}</div>
           <div className="grid-four-columns">
             {Layer.map((i) => (
-              <button onClick={() => indexContext.setIndex!(i)} key={i}>
+              <button className={`${indexContext.Index === i ? 'button-active' : null}`} onClick={() => indexContext.setIndex!(i)} key={i}>
                 {i + 1}
               </button>
             ))}
@@ -121,6 +121,7 @@ export default function Sidebar() {
                 ? indexContext.setIndex!(8)
                 : indexContext.setIndex!(16)
             }
+            className={`${indexContext.IsEightByEight ? indexContext.Index === 8 ? 'button-active' : null : indexContext.Index === 16 ? 'button-active' : null }`}  
           >
             full view
           </button>

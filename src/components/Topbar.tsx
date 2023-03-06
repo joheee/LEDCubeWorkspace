@@ -30,6 +30,7 @@ export default function Topbar() {
             res.push({frame:arr.length})
             localStorage.setItem(frame,JSON.stringify(res))
         }
+        indexContext.setCurrFrame!(arr.length)
     }
 
     function handleCreateFrame() {

@@ -1,13 +1,18 @@
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { IndexContext } from "../config/Context"
 import { defaultIsPhotoModal } from "../config/Variable"
 import { useKeyPressed } from "../hooks/KeyPressed"
 
 export function PhotoModal() {
     const indexContext = useContext(IndexContext)
-    useKeyPressed('Escape','keydown', () => {
-        indexContext.setIsPhotoModal!(defaultIsPhotoModal)
-    })
+    useKeyPressed('keydown', 
+        useCallback((e:any) => {
+            const buff = e as KeyboardEvent
+            if(buff.key === 'Escape') {
+                indexContext.setIsPhotoModal!(defaultIsPhotoModal)
+            }
+        },[])
+    )
 
     return (
         !indexContext.isPhotoModal ? null :

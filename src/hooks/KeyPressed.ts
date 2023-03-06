@@ -1,16 +1,10 @@
-import { useContext, useEffect } from "react"
-import { IndexContext } from "../config/Context"
+import { useEffect } from "react"
 
-
-export function useKeyPressed(keyPress:string, type:string, func:() => void){
-    
-    const handleKeyPressed = ({key}:any) => {
-        if(key === keyPress) {
-            func()
-        }
-    }
-
+export function useKeyPressed(type:string, func:(e:any) => void){
     useEffect(()=>{
-        window.addEventListener(type, handleKeyPressed)
+        window.addEventListener(type, func)
+        return () => {
+            window.removeEventListener(type,func)
+        }
     },[])
-}   
+}
