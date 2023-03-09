@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { HexColorPicker } from "react-colorful"
 import { IndexContext } from "../config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey, defaultDeleteShortCut, defaultEightBound, defaultIsBoxSelected, defaultSixteenBound } from "../config/Variable"
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey, defaultDeleteShortCut, defaultEightBound, defaultIsBoxSelected, defaultPaintShortCut, defaultSixteenBound } from "../config/Variable"
 import { useKeyPressed } from "../hooks/KeyPressed"
 import { useFetchColorLocalStorage } from "../hooks/LocalStorages"
 import { LED } from "../model/LED"
@@ -18,13 +18,21 @@ export default function FloatingColor() {
             if(buff.key === 'Escape') {
                 indexContext.setIsBoxColor!(defaultBoxColorOpened)
                 indexContext.setIsDeleteShortCut!(defaultDeleteShortCut)
+                indexContext.setIsPaintShortCut!(defaultPaintShortCut)
                 indexContext.setIsBoxSelected!(defaultIsBoxSelected)
+                handleClickExit()
             }
-            const currBoxSize = indexContext.IsEightByEight ? defaultEightBound : defaultSixteenBound
-            if(buff.shiftKey) indexContext.setIsDeleteShortCut!(true)
+            if(buff.shiftKey) {
+                indexContext.setIsDeleteShortCut!(true)
+                indexContext.setIsPaintShortCut!(defaultPaintShortCut)
+            }
+            if(buff.ctrlKey) {
+                indexContext.setIsPaintShortCut!(true)
+                indexContext.setIsDeleteShortCut!(defaultDeleteShortCut)
+            }
         },[])
     )
-    
+
     useEffect(() => {
         console.log(indexContext.IsBoxSelected)
         console.log(indexContext.IsDeleteShortCut)
@@ -32,6 +40,15 @@ export default function FloatingColor() {
             handleClickRemove()
         }
     },[indexContext.IsDeleteShortCut, indexContext.IsBoxSelected])
+
+    useEffect(() => {
+        console.log('anjg kau')
+        if(indexContext.IsPaintShortCut && indexContext.IsBoxSelected && indexContext.BoxKey) {
+            indexContext.setColorBox!(ColorInput)
+            const currentSavedColor = new LED(indexContext.BoxKey, ColorInput)
+            currentSavedColor.appendLocalStorage(indexContext.CurrFrame, indexContext.IsEightByEight, indexContext.IsEightByEight ? indexContext.frameEight?.Frames! : indexContext.frameSixteen?.Frames!)
+        }
+    }, [indexContext.IsPaintShortCut, indexContext.IsBoxSelected, indexContext.BoxKey])
 
     useEffect(() => {
         const currIndex = indexContext.IsEightByEight ? defaultEightBound : defaultSixteenBound
@@ -52,6 +69,7 @@ export default function FloatingColor() {
     }
     
     const handleClickExit = () => {
+        indexContext.setIsPaintShortCut!(defaultPaintShortCut)
         indexContext.setIsBoxSelected!(defaultIsBoxSelected)
         indexContext.setIsBoxColor!(defaultBoxColorOpened)
         indexContext.setColorBox!(defaultBoxColor)
@@ -65,7 +83,7 @@ export default function FloatingColor() {
     return <>
             <div className="absolute-float flex-column-end">
                 {
-                    indexContext.IsBoxColor === false ? null :
+                    indexContext.IsBoxColor === false || indexContext.IsPaintShortCut === true ? null :
                     <div className="flex-column-center default-card">
                         <div className="flex-row-space-between">
                             <div className="">LED {indexContext.BoxKey}</div>
@@ -83,9 +101,28 @@ export default function FloatingColor() {
                     </div>
                 }
                 {
+                    indexContext.IsPaintShortCut === false ? null :
+                    <div className="flex-column-center default-card">
+                        <div className="flex-row-space-between">
+                            <div className="">HELLA SHORTCUT</div>
+                        </div>
+                        <HexColorPicker color={ColorInput} onChange={setColorInput} />
+                        <input className="input-styling" type='text' value={ColorInput} onChange={(e)=>setColorInput(e.target.value)}/>
+                        <div className="color-sample" style={{
+                            backgroundColor:ColorInput
+                        }}></div>
+                    </div>
+                }
+                {
                     indexContext.IsDeleteShortCut === false ? null :
                     <div className="default-card">
                         delete active (esc to deactivate)
+                    </div>
+                }
+                                {
+                    indexContext.IsPaintShortCut === false ? null :
+                    <div className="default-card">
+                        paint is active (esc to deactivate)
                     </div>
                 }
             </div>

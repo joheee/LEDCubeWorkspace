@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { BoxFrameInterface } from "../hooks/LocalStorages";
-import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame } from "./Variable";
+import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultPaintShortCut, defaultRefreshFrame } from "./Variable";
 
 interface FrameInterface {
     Frames:BoxFrameInterface[],
@@ -35,7 +35,9 @@ export interface IndexContextInterface {
     IsDeleteShortCut:boolean, 
     setIsDeleteShortCut?:(e:boolean) => void,
     IsBoxSelected:boolean, 
-    setIsBoxSelected?:(e:boolean) => void
+    setIsBoxSelected?:(e:boolean) => void,
+    IsPaintShortCut:boolean, 
+    setIsPaintShortCut?:(e:boolean) => void
 }
 
 const defaultState = {
@@ -52,6 +54,7 @@ const defaultState = {
     ColorBackground:defaultBackroundColor,
     IsDeleteShortCut:defaultDeleteShortCut,
     IsBoxSelected:defaultIsBoxSelected, 
+    IsPaintShortCut:defaultPaintShortCut, 
 }
 
 export const IndexContext = createContext<IndexContextInterface>(defaultState)

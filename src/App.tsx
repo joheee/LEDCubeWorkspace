@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultPaintShortCut, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
 
 function App() {
@@ -35,8 +35,12 @@ function App() {
   // BACKGROUND COLOR
   const [ColorBackground,setColorBackground] = useState<string>(defaultBackroundColor)
 
+  // SHORTCUT DELETE
   const [IsDeleteShortCut, setIsDeleteShortCut] = useState<boolean>(defaultDeleteShortCut)
   const [IsBoxSelected, setIsBoxSelected] = useState<boolean>(defaultIsBoxSelected)
+  
+  // SHORTCUT CREATE
+  const [IsPaintShortCut, setIsPaintShortCut] = useState<boolean>(defaultPaintShortCut)
 
   const val = {
     Index, 
@@ -66,7 +70,9 @@ function App() {
     IsDeleteShortCut, 
     setIsDeleteShortCut,
     IsBoxSelected, 
-    setIsBoxSelected
+    setIsBoxSelected,
+    IsPaintShortCut, 
+    setIsPaintShortCut
   }
 
   return (

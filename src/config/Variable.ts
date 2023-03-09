@@ -23,9 +23,11 @@ export const defaultSixteenBound = 16
 export const defaultCurrFrame = 0
 export const defaultRefreshFrame = false
 export const defaultFrameArray = []
-// SHORTCUT DELET
+// SHORTCUT DELETE
 export const defaultDeleteShortCut = false
 export const defaultIsBoxSelected = false
+// SHORTCUT PAINT
+export const defaultPaintShortCut = false
 
 // LOCAL STORAGE KEY
 export const FRAME_16_KEY = 'LAMBDA_16'
