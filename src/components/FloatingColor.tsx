@@ -16,22 +16,29 @@ export default function FloatingColor() {
         useCallback((e:any) => {
             const buff = e as KeyboardEvent
             if(buff.key === 'Escape') {
-                indexContext.setIsBoxColor!(defaultBoxColorOpened)
-                indexContext.setIsDeleteShortCut!(defaultDeleteShortCut)
-                indexContext.setIsPaintShortCut!(defaultPaintShortCut)
-                indexContext.setIsBoxSelected!(defaultIsBoxSelected)
-                handleClickExit()
+                handleEscape()
             }
             if(buff.shiftKey) {
                 indexContext.setIsDeleteShortCut!(true)
                 indexContext.setIsPaintShortCut!(defaultPaintShortCut)
+                document.body.style.cursor = 'pointer'
             }
             if(buff.ctrlKey) {
                 indexContext.setIsPaintShortCut!(true)
                 indexContext.setIsDeleteShortCut!(defaultDeleteShortCut)
+                document.body.style.cursor = 'pointer'
             }
         },[])
     )
+
+    function handleEscape() {
+        document.body.style.cursor = 'default'
+        indexContext.setIsBoxColor!(defaultBoxColorOpened)
+        indexContext.setIsDeleteShortCut!(defaultDeleteShortCut)
+        indexContext.setIsPaintShortCut!(defaultPaintShortCut)
+        indexContext.setIsBoxSelected!(defaultIsBoxSelected)
+        handleClickExit()
+    }
 
     useEffect(() => {
         console.log(indexContext.IsBoxSelected)
