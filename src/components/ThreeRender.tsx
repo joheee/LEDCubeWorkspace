@@ -25,13 +25,27 @@ function DisplayLayer(prop:DisplayLayerInterface) {
 
 
 export default function ThreeRender() {
-
   const indexContext = useContext(IndexContext)
   const frameEight = useFetchFramesLocalStorage(FRAME_8_KEY)
   const frameSixteen = useFetchFramesLocalStorage(FRAME_16_KEY)
+  const [Zoom, setZoom] = useState<string>('zzz')
+  
+  const canvasRender = document.getElementById('canvas-render')
+  window.addEventListener("resize", getSizes, false)
+
+  function getSizes() {
+    const body = document.body
+    const zoom = body.clientWidth + "px x " + body.clientHeight + "px";
+    setZoom(zoom)
+  }
+
+  // ZOOM NOT FINISH
+  useEffect(() => {
+  },[Zoom])
+
   return (
     <>
-      <Canvas orthographic camera={{zoom:25}}>
+      <Canvas orthographic camera={{zoom:25}} id='canvas-render'>
           <ambientLight intensity={0.5}/>
           <OrbitControls/>
 
