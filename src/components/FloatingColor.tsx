@@ -41,15 +41,12 @@ export default function FloatingColor() {
     }
 
     useEffect(() => {
-        console.log(indexContext.IsBoxSelected)
-        console.log(indexContext.IsDeleteShortCut)
         if(indexContext.IsDeleteShortCut && indexContext.IsBoxSelected) {
             handleClickRemove()
         }
     },[indexContext.IsDeleteShortCut, indexContext.IsBoxSelected])
 
     useEffect(() => {
-        console.log('anjg kau')
         if(indexContext.IsPaintShortCut && indexContext.IsBoxSelected && indexContext.BoxKey) {
             indexContext.setColorBox!(ColorInput)
             const currentSavedColor = new LED(indexContext.BoxKey, ColorInput)
@@ -59,7 +56,6 @@ export default function FloatingColor() {
 
     useEffect(() => {
         const currIndex = indexContext.IsEightByEight ? defaultEightBound : defaultSixteenBound
-        console.log(currIndex)
     }, [])  
     
     const handleClickSave = () => {
@@ -126,7 +122,7 @@ export default function FloatingColor() {
                         delete active (esc to deactivate)
                     </div>
                 }
-                                {
+                {
                     indexContext.IsPaintShortCut === false ? null :
                     <div className="default-card">
                         paint is active (esc to deactivate)

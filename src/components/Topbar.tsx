@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import { IndexContext } from "../config/Context"
+import { FrameInterface, IndexContext, IndexContextInterface } from "../config/Context"
 import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
-import { BoxFrameInterface } from "../hooks/LocalStorages"
+import { BoxFrameInterface, clearFrame } from "../hooks/LocalStorages"
 import { usePlayFrame } from "../hooks/PlayFrame"
 
 
@@ -49,24 +49,73 @@ export default function Topbar() {
         triggerPlay()
     }
 
+    function handleDeleteFrame() {
+        clearFrame(indexContext)
+    }
+
     return (
-        <div className="topbar-container flex-start-gap">
-            <div className="topbar-card">
-                {
-                    indexContext.IsEightByEight ? 
-                    frameEight.Frames.map((item,i) => (
-                        <TopBarCard key={i} frame={item.frame}/>
-                        ))
+        <div className="topbar-container topbar-grid">
+            {
+                indexContext.IsEightByEight ? 
+                    indexContext.frameEight?.Frames.length !== 0 ? 
+                        <DefaultFrame frameEight={frameEight} frameSixteen={frameSixteen} indexContext={indexContext}/>
+                        : null
                     :
-                    frameSixteen.Frames.map((item,i) => (
-                        <TopBarCard key={i} frame={item.frame}/>
-                        ))
+                    indexContext.frameSixteen?.Frames.length !== 0 ?
+                        <DefaultFrame frameEight={frameEight} frameSixteen={frameSixteen} indexContext={indexContext}/>
+                        : null
+            }
+            
+            <div className="flex-start-gap">
+                {
+                    indexContext.IsEightByEight ?
+                    indexContext.frameEight?.Frames.length !== 0 ? 
+                    <div className="topbar-card">
+                                <button onClick={handleDeleteFrame}>delete</button>
+                            </div> : null
+                        :
+                        indexContext.frameSixteen?.Frames.length !== 0 ? 
+                        <div className="topbar-card">
+                                <button onClick={handleDeleteFrame}>delete</button>
+                            </div> : null
                 }
-            </div>
-            <div className="topbar-card">
-                <button onClick={handleCreateFrame}>+</button>
-                <button onClick={() => handlePlayFrame()}>play</button>
+                <div className="topbar-card">
+                    <button onClick={handleCreateFrame}>+</button>
+                    <button onClick={() => handlePlayFrame()}>play</button>
+                </div>
             </div>
         </div>
     )
+}
+
+interface DefaultFrameInterface {
+    indexContext:IndexContextInterface,
+    frameEight:FrameInterface,
+    frameSixteen:FrameInterface
+}
+
+function DefaultFrame({indexContext,frameEight,frameSixteen}:DefaultFrameInterface){
+    return <div className="flex-start-gap frame-container">
+    {
+        indexContext.IsEightByEight ? 
+            indexContext.frameEight?.Frames.length !== 0 ? 
+                <div className="topbar-card">
+                    {
+                        frameEight.Frames.map((item,i) => (
+                            <TopBarCard key={i} frame={item.frame}/>
+                            ))
+                        }
+                </div>
+                : null
+            :
+            indexContext.frameSixteen?.Frames.length !== 0 ?
+                <div className="topbar-card">
+                    {
+                        frameSixteen.Frames.map((item,i) => (
+                            <TopBarCard key={i} frame={item.frame}/>
+                        ))
+                    }
+                </div> : null
+    }
+</div>   
 }

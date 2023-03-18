@@ -13,6 +13,8 @@ export const defaultBoxOpacityOffset = 50
 export const defaultIsPhotoModal = false
 export const defaultBackroundColor = '#000000'
 
+export const defaultIsDeactivate = false
+
 export const hexBound = 16
 
 // SET IF 8X8X8 OR 16X16X16

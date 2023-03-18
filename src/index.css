@@ -85,7 +85,6 @@ button:hover {
     background-color: aquamarine
 }
 
-
 .sidebar-container {
     background-color: white;
     position: fixed;
@@ -99,13 +98,24 @@ button:hover {
 
 .topbar-container {
     position: fixed;
-    left: 250px;
+    left: 260px;
     z-index: 10;
-    width: 50rem;
+    width: 70rem;
     padding: 1rem;
 }
 
+.frame-container {
+    padding: 0 1rem 1rem 0;
+}
+
+.topbar-grid {
+    display: grid;
+    justify-content: start;
+    gap: 1rem
+}
+
 .topbar-card {
+    width: fit-content;
     background-color: white;
     padding: 1rem;
     border-radius: .5rem;
@@ -162,4 +172,8 @@ img {
     width: 100%;
     height: 100%;
     border-radius: .5rem;
+}
+
+.enable-scroll{
+    overflow-y: auto;
 }

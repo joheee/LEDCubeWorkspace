@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { IndexContext } from "../config/Context"
+import { IndexContext, IndexContextInterface } from "../config/Context"
 import { defaultBoxColor, defaultFrameArray, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 
 export interface BoxAttributeInterface {
@@ -83,4 +83,36 @@ export function useFetchDynamicLocalStorage(prop:FetchLocalDynamicInterface) {
             const getBackgroundColor = localStorage.getItem(prop.localStorageKey)
         prop.setState!(getBackgroundColor!)
     }, [prop.state])
+}
+
+export function clearAllColorInFrame(indexContext:IndexContextInterface){
+    let getCurrentCube = indexContext.IsEightByEight ? indexContext.frameEight : indexContext.frameSixteen
+    if(!getCurrentCube) return
+    getCurrentCube.Frames[indexContext.CurrFrame] = {frame:indexContext.CurrFrame}
+    const getCurrKey = indexContext.IsEightByEight ? FRAME_8_KEY : FRAME_16_KEY
+    localStorage.setItem(getCurrKey, JSON.stringify(getCurrentCube.Frames))
+    getCurrentCube.refetch()   
+}
+
+export function clearFrame(indexContext:IndexContextInterface){
+    let getCurrentFrame = indexContext.IsEightByEight ? indexContext.frameEight : indexContext.frameSixteen
+    if(!getCurrentFrame) return
+    let currFrameIndex = indexContext.CurrFrame
+    let filterFrame = getCurrentFrame.Frames.filter(item => {
+        return item.frame !== currFrameIndex
+    })
+    filterFrame = filterFrame.map((item,i) => {
+        item.frame = i
+        return item
+    })
+    
+    const getCurrKey = indexContext.IsEightByEight ? FRAME_8_KEY : FRAME_16_KEY
+    if(filterFrame.length < 1) {
+        localStorage.removeItem(getCurrKey)
+        getCurrentFrame.refetch()
+        return
+    } 
+    localStorage.setItem(getCurrKey, JSON.stringify(filterFrame))
+    getCurrentFrame.refetch()
+    if(indexContext.CurrFrame !== 0) indexContext.setCurrFrame!(indexContext.CurrFrame - 1)
 }

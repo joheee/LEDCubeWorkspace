@@ -2,8 +2,8 @@ import { HexColorPicker } from "react-colorful"
 import { useContext, useEffect, useState } from "react"
 import { LayerTotalEight, LayerTotalSixteen } from "../config/Mapping"
 import { IndexContext } from "../config/Context"
-import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset} from "../config/Variable"
-import { useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
+import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY} from "../config/Variable"
+import { clearAllColorInFrame, useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
 
 export default function Sidebar() {
 
@@ -62,8 +62,12 @@ export default function Sidebar() {
     }
   }, [indexContext.IsEightByEight])
 
+  function handleClearColor() {
+    clearAllColorInFrame(indexContext)
+  }
+
   return (
-    <div className="sidebar-container flex-column-center">
+    <div className="sidebar-container flex-column-center enable-scroll">
       <div className="flex-column-center">
         <div className="">background color</div>
         <HexColorPicker
@@ -103,8 +107,8 @@ export default function Sidebar() {
             current cube {indexContext.IsEightByEight ? "8 by 8" : "16 by 16"}
           </div>
           <div className="flex-row-center"> 
-            <button  onClick={handleEight} className={`${indexContext.IsEightByEight ? 'button-active' : null}`} >8 x 8 x 8</button>
-            <button onClick={handleSixteen} className={`${!indexContext.IsEightByEight ? 'button-active' : null}`} >16 x 16 x 16</button>
+            <button disabled={indexContext.IsDeactivate} onClick={handleEight} className={`${indexContext.IsEightByEight ? 'button-active' : null}`} >8 x 8 x 8</button>
+            <button disabled={indexContext.IsDeactivate} onClick={handleSixteen} className={`${!indexContext.IsEightByEight ? 'button-active' : null}`} >16 x 16 x 16</button>
           </div>
 
           <div className="">layer {indexContext.Index + 1}</div>
@@ -125,7 +129,9 @@ export default function Sidebar() {
           >
             full view
           </button>
-
+            <button onClick={() => handleClearColor()}>
+              clear color
+            </button>
           <button
             onClick={() =>
               indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)
