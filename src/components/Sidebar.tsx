@@ -62,6 +62,10 @@ export default function Sidebar() {
     }
   }, [indexContext.IsEightByEight])
 
+  function handleFullView() {
+    indexContext.IsEightByEight ? indexContext.setIndex!(8) : indexContext.setIndex!(16)
+  }
+
   function handleClearColor() {
     clearAllColorInFrame(indexContext)
   }
@@ -119,27 +123,28 @@ export default function Sidebar() {
               </button>
             ))}
           </div>
-          <button
-            onClick={() =>
-              indexContext.IsEightByEight
-                ? indexContext.setIndex!(8)
-                : indexContext.setIndex!(16)
-            }
-            className={`${indexContext.IsEightByEight ? indexContext.Index === 8 ? 'button-active' : null : indexContext.Index === 16 ? 'button-active' : null }`}  
-          >
-            full view
-          </button>
+          <div className="sidebar-two-grid">
             <button onClick={() => handleClearColor()}>
               clear color
             </button>
-          <button
-            onClick={() =>
-              indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)
-            }
-          >
-            upload image
-          </button>
-          <button>save list of frame</button>
+            <button
+              onClick={handleFullView}
+              className={`${indexContext.IsEightByEight ? indexContext.Index === 8 ? 'button-active' : null : indexContext.Index === 16 ? 'button-active' : null }`}  
+              >
+              full view
+            </button>
+            </div>
+
+          <div className="sidebar-two-grid">
+            <button>save</button>
+            <button
+              onClick={() =>
+                indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)
+              }
+              >
+              upload image
+            </button>
+          </div>
         </>
       )}
     </div>

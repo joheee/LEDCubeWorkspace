@@ -66,7 +66,7 @@ canvas {
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 button {
@@ -176,4 +176,9 @@ img {
 
 .enable-scroll{
     overflow-y: auto;
+}
+.sidebar-two-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: .5rem;
 }
