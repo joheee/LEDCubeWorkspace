@@ -1,7 +1,9 @@
-import { useCallback, useContext } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { IndexContext } from "../config/Context"
-import { defaultIsPhotoModal } from "../config/Variable"
+import { defaultEightBound, defaultIsPhotoModal, defaultSixteenBound } from "../config/Variable"
 import { useKeyPressed } from "../hooks/KeyPressed"
+import { BoxFrameInterface, drawDataURIOnCanvas } from "../hooks/LocalStorages"
+
 
 export function PhotoModal() {
     const indexContext = useContext(IndexContext)
@@ -14,6 +16,19 @@ export function PhotoModal() {
         },[])
     )
 
+    function handleImageChange(image:FileList){
+        const canvas = canvasRef.current 
+        const currFile = image[0]
+        if(canvas) drawDataURIOnCanvas(URL.createObjectURL(currFile), canvas!, indexContext)
+    }
+
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+  
+    
+
+    
+     
+
     return (
         !indexContext.isPhotoModal ? null :
         <div className="modal-container">
@@ -23,10 +38,10 @@ export function PhotoModal() {
                     <button onClick={() => indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)}>x</button>
                 </div>
                 <div className="image-container">
-                    <img src="https://art.pixilart.com/50fff0d8e8679e2.png" alt="" />
+                    <canvas className="canvas-photo" ref={canvasRef}></canvas>
                 </div>
                 <div className="flex-row-space-between">
-                    <input type="file" name="" id="" />
+                    <input type="file" name="" id="" onChange={e => handleImageChange(e.target.files!)}/>
                     <button>save image</button>                
                 </div>
             </div>

@@ -45,7 +45,7 @@ export default function ThreeRender() {
 
   return (
     <>
-      <Canvas orthographic camera={{zoom:25}} id='canvas-render'>
+      <Canvas orthographic camera={{zoom:25}} id='canvas-render' className="canvas-main">
           <ambientLight intensity={0.5}/>
           <OrbitControls/>
 

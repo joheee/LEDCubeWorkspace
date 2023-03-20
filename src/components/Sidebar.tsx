@@ -124,7 +124,7 @@ export default function Sidebar() {
             ))}
           </div>
           <div className="sidebar-two-grid">
-            <button onClick={() => handleClearColor()}>
+            <button disabled={indexContext.IsDeactivate} onClick={() => handleClearColor()}>
               clear color
             </button>
             <button
@@ -136,8 +136,9 @@ export default function Sidebar() {
             </div>
 
           <div className="sidebar-two-grid">
-            <button>save</button>
+            <button disabled={indexContext.IsDeactivate}>save</button>
             <button
+              disabled={indexContext.IsDeactivate}
               onClick={() =>
                 indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)
               }
