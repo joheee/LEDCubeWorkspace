@@ -24,11 +24,6 @@ export function PhotoModal() {
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
   
-    
-
-    
-     
-
     return (
         !indexContext.isPhotoModal ? null :
         <div className="modal-container">
