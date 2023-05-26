@@ -102,7 +102,7 @@ export default function Sidebar() {
               onChange={(e) =>
                 indexContext.setBoxOffset!(Number(e.target.value))
               }
-              min="1"
+              min="0"
               max={maxOffset}
             />
           </div>

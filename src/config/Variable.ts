@@ -1,5 +1,5 @@
 export const boxSize = 1
-export const defaultOffset = 1
+export const defaultOffset = 0
 export const maxOffset = 4
 export const defaultBoxIndex = 8
 

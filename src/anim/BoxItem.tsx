@@ -21,7 +21,7 @@ export function generateKey(prop:number[]){
 
 export default function Box(props: BoxItemInterface) {
   const indexContext = useContext(IndexContext)
-  const position = new Vector3(props.position[0] * indexContext.BoxOffset, props.position[1] * indexContext.BoxOffset, props.position[2] * indexContext.BoxOffset)
+  const position = new Vector3(props.position[0] * (- indexContext.BoxOffset), props.position[1] * (- indexContext.BoxOffset), props.position[2] * (- indexContext.BoxOffset))
   
   const key = generateKey([props.position[0], props.position[1], props.position[2]])
   const {ColorValue} = useFetchColorLocalStorage(key)

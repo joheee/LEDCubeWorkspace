@@ -37,7 +37,6 @@ export function PhotoModal() {
                 </div>
                 <div className="flex-row-space-between">
                     <input type="file" name="" id="" onChange={e => handleImageChange(e.target.files!)}/>
-                    <button>save image</button>                
                 </div>
             </div>
         </div>
