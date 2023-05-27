@@ -37,6 +37,8 @@ export default function Box(props: BoxItemInterface) {
 
   const boxRef = useRef<any>()
   
+  console.log((indexContext.Opacity + defaultBoxOpacityOffset)/defaultBoxOpacityMax)
+
   return (
     <mesh ref={boxRef}
       position={position}

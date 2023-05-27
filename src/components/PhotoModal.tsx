@@ -19,6 +19,8 @@ export function PhotoModal() {
     function handleImageChange(image:FileList){
         const canvas = canvasRef.current 
         const currFile = image[0]
+        console.log(currFile)
+        indexContext.SetPhoto!(URL.createObjectURL(currFile))
         if(canvas) drawDataURIOnCanvas(URL.createObjectURL(currFile), canvas!, indexContext)
     }
 
@@ -29,15 +31,14 @@ export function PhotoModal() {
         <div className="modal-container">
             <div className="default-card flex-column-center photo-container">
                 <div className="flex-row-space-between">
-                    <div className="">photo generator</div>
+                    <div className="">choose your photo</div>
                     <button onClick={() => indexContext.setIsPhotoModal!(!indexContext.isPhotoModal)}>x</button>
                 </div>
                 <div className="image-container">
-                    <canvas className="canvas-photo" ref={canvasRef}></canvas>
+                    <img src={indexContext.Photo} className="w-full" />
+                    <canvas className="canvas-photo" style={{display:'none'}} ref={canvasRef}></canvas>
                 </div>
-                <div className="flex-row-space-between">
-                    <input type="file" name="" id="" onChange={e => handleImageChange(e.target.files!)}/>
-                </div>
+                <input type="file" id="images" onChange={e => handleImageChange(e.target.files!)}/>
             </div>
         </div>
     )

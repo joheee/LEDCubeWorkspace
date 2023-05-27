@@ -9,11 +9,12 @@ export const defaultBoxColorOpened = false
 export const defaultBoxKey = '999'
 
 export const defaultBoxOpacityMax = 100
-export const defaultBoxOpacityOffset = 50
+export const defaultBoxOpacityOffset = 0
 export const defaultIsPhotoModal = false
 export const defaultBackroundColor = '#000000'
 
 export const defaultIsDeactivate = false
+export const defaultPhoto = 'https://art.pixilart.com/38991021597b7ef.png'
 
 export const hexBound = 16
 
