@@ -9,7 +9,7 @@ export const defaultBoxColorOpened = false
 export const defaultBoxKey = '999'
 
 export const defaultBoxOpacityMax = 100
-export const defaultBoxOpacityOffset = 1
+export const defaultBoxOpacityOffset = 0.7
 export const defaultIsPhotoModal = false
 export const defaultBackroundColor = '#000000'
 

@@ -16,6 +16,7 @@ function App() {
   // BOX AND LAYER
   const [Index, setIndex] = useState<number>(defaultBoxIndex)
   const [Opacity, setOpacity] = useState<number>(defaultBoxOpacity)
+  const [OffOpacity, setOffOpacity] = useState<number>(defaultBoxOpacity)
   const [IsBoxColor, setIsBoxColor] = useState<boolean>(defaultBoxColorOpened)
   const [ColorBox,setColorBox] = useState<string>(defaultBoxColor)
   const [BoxKey, setBoxKey] = useState<string>(defaultBoxKey)
@@ -78,7 +79,8 @@ function App() {
     setIsPaintShortCut,
     IsDeactivate, 
     setIsDeactivate,
-    Photo, SetPhoto
+    Photo, SetPhoto,
+    OffOpacity, setOffOpacity
   }
 
   return (

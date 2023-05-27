@@ -149,6 +149,16 @@ input[type=file]::file-selector-button:hover {
     gap: 1rem;
 }
 
+.grid-two-column-center {
+    display: grid;
+    grid-template-columns: 90px 90px;
+    gap: 0.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
 .shadow-default {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

@@ -86,30 +86,46 @@ export default function Sidebar() {
       {indexContext.frameEight?.Frames.length === 0 &&
       indexContext.frameSixteen?.Frames.length === 0 ? null : (
         <>
-          <div className="flex-column-center">
-            <div className="">box opacity {indexContext.Opacity / 100}</div>
-            <input
-              type="range"
-              value={indexContext.Opacity}
-              onChange={(e) => {
-                indexContext.setOpacity!(Number(e.target.value))
-              }}
-              min="0"
-              max="100"
-            />
+          <div className="grid-two-column-center">
+            <div className="">
+              <div className="text-center">box {indexContext.OffOpacity / 100}</div>
+              <input
+                type="range"
+                value={indexContext.OffOpacity}
+                onChange={(e) => {
+                  indexContext.setOffOpacity!(Number(e.target.value))
+                }}
+                min="0"
+                max="100"
+                />
+            </div>
+            <div className="">
+              <div className="text-center">off {indexContext.Opacity / 100}</div>
+              <input
+                type="range"
+                value={indexContext.Opacity}
+                onChange={(e) => {
+                  indexContext.setOpacity!(Number(e.target.value))
+                }}
+                min="0"
+                max="100"
+                />
+            </div>
           </div>
 
           <div className="flex-column-center">
-            <div className="">box spacing {indexContext.BoxOffset}</div>
-            <input
-              type="range"
-              value={indexContext.BoxOffset}
-              onChange={(e) =>
-                indexContext.setBoxOffset!(Number(e.target.value))
-              }
-              min="0"
-              max={maxOffset}
-            />
+            <div className="">
+              <div className="text-center">box spacing {indexContext.BoxOffset}</div>
+              <input
+                type="range"
+                value={indexContext.BoxOffset}
+                onChange={(e) =>
+                  indexContext.setBoxOffset!(Number(e.target.value))
+                }
+                min="0"
+                max={maxOffset}
+                />
+            </div>
           </div>
 
           <div className="">

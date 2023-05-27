@@ -41,7 +41,7 @@ export default function Box(props: BoxItemInterface) {
       position={position}
       onClick={handleClick}>
       <boxGeometry args={[boxSize, boxSize, boxSize]} attach='geometry'/>
-      <meshBasicMaterial attach='material' transparent={true} color={ColorValue ? ColorValue : defaultBoxColor} opacity={ColorValue !== null ? indexContext.Opacity/defaultBoxOpacityMax + defaultBoxOpacityOffset : indexContext.Opacity/defaultBoxOpacityMax}/>
+      <meshBasicMaterial attach='material' transparent={true} color={ColorValue ? ColorValue : defaultBoxColor} opacity={ColorValue !== null ? indexContext.Opacity/defaultBoxOpacityMax + indexContext.OffOpacity/defaultBoxOpacityMax : indexContext.Opacity/defaultBoxOpacityMax}/>
     </mesh>
   )
 }

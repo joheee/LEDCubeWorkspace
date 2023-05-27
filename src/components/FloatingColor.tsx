@@ -80,8 +80,10 @@ export default function FloatingColor() {
     }
 
     useEffect(() => {
-        if(!(indexContext.IsBoxColor === false || indexContext.IsPaintShortCut === true))setColorInput(ColorValue !== null ? ColorValue : defaultBoxColor)
-    })
+        if(!(indexContext.IsBoxColor === false || indexContext.IsPaintShortCut === true) && ColorValue !== null){
+            setColorInput(ColorValue)
+        }
+    },[ColorValue])
 
     return <>
             <div className="absolute-float flex-column-end">
