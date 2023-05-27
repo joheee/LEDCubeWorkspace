@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { boxSize, defaultBoxColor, defaultBoxOpacityMax, defaultBoxOpacityOffset, defaultEightBound, defaultOffset, defaultSixteenBound } from '../config/Variable'
 import { IndexContext } from '../config/Context'
 import { Vector3 } from 'three'
@@ -26,7 +26,6 @@ export default function Box(props: BoxItemInterface) {
   const key = generateKey([props.position[0], props.position[1], props.position[2]])
   const {ColorValue} = useFetchColorLocalStorage(key)
 
-
   const handleClick =()=> {
     if(!props.isFull) {
       indexContext.setIsBoxColor!(true)
@@ -37,14 +36,12 @@ export default function Box(props: BoxItemInterface) {
 
   const boxRef = useRef<any>()
   
-  console.log((indexContext.Opacity + defaultBoxOpacityOffset)/defaultBoxOpacityMax)
-
   return (
     <mesh ref={boxRef}
       position={position}
       onClick={handleClick}>
       <boxGeometry args={[boxSize, boxSize, boxSize]} attach='geometry'/>
-      <meshBasicMaterial attach='material' transparent={true} color={ColorValue ? ColorValue : defaultBoxColor} opacity={ColorValue ? (indexContext.Opacity + defaultBoxOpacityOffset)/defaultBoxOpacityMax : indexContext.Opacity/defaultBoxOpacityMax}/>
+      <meshBasicMaterial attach='material' transparent={true} color={ColorValue ? ColorValue : defaultBoxColor} opacity={ColorValue !== null ? indexContext.Opacity/defaultBoxOpacityMax + defaultBoxOpacityOffset : indexContext.Opacity/defaultBoxOpacityMax}/>
     </mesh>
   )
 }

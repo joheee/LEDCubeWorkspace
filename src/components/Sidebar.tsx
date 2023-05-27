@@ -2,7 +2,7 @@ import { HexColorPicker } from "react-colorful"
 import { useContext, useEffect, useState } from "react"
 import { LayerTotalEight, LayerTotalSixteen } from "../config/Mapping"
 import { IndexContext } from "../config/Context"
-import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY} from "../config/Variable"
+import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY, defaultCurrFrame} from "../config/Variable"
 import { clearAllColorInFrame, useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
 
 export default function Sidebar() {
@@ -37,11 +37,14 @@ export default function Sidebar() {
     document.body.style.backgroundColor = indexContext.ColorBackground
   }, [indexContext.ColorBackground])
 
+  
   function handleEight() {
+    indexContext.setCurrFrame!(defaultCurrFrame)
     indexContext.setIsEightByEight!(true)
     indexContext.frameEight?.refetch()
   }
   function handleSixteen() {
+    indexContext.setCurrFrame!(defaultCurrFrame)
     indexContext.setIsEightByEight!(false)
     indexContext.frameSixteen?.refetch()
   }
@@ -88,9 +91,11 @@ export default function Sidebar() {
             <input
               type="range"
               value={indexContext.Opacity}
-              onChange={(e) => indexContext.setOpacity!(Number(e.target.value))}
+              onChange={(e) => {
+                indexContext.setOpacity!(Number(e.target.value))
+              }}
               min="0"
-              max={defaultBoxOpacityMax}
+              max="100"
             />
           </div>
 

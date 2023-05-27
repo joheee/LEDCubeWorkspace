@@ -1,12 +1,13 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { FrameInterface, IndexContext, IndexContextInterface } from "../config/Context"
-import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
+import { defaultCurrFrame, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 import { BoxFrameInterface, clearFrame } from "../hooks/LocalStorages"
 import { usePlayFrame } from "../hooks/PlayFrame"
 
 
 function TopBarCard(prop:BoxFrameInterface) {
     const indexContext = useContext(IndexContext)
+
     return (
         <button className={`${indexContext.CurrFrame === prop.frame ? 'button-active' : null}`} onClick={() => indexContext.setCurrFrame!(prop.frame)}>
             {prop.frame}
@@ -95,6 +96,7 @@ interface DefaultFrameInterface {
 }
 
 function DefaultFrame({indexContext,frameEight,frameSixteen}:DefaultFrameInterface){
+
     return <div className="flex-start-gap frame-container">
     {
         indexContext.IsEightByEight ? 

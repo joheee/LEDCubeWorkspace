@@ -78,8 +78,7 @@ function App() {
     setIsPaintShortCut,
     IsDeactivate, 
     setIsDeactivate,
-    Photo, 
-    SetPhoto
+    Photo, SetPhoto
   }
 
   return (

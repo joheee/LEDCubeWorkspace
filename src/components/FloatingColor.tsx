@@ -1,17 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from "react"
 import { HexColorPicker } from "react-colorful"
 import { IndexContext } from "../config/Context"
-import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey, defaultDeleteShortCut, defaultEightBound, defaultIsBoxSelected, defaultPaintShortCut, defaultSixteenBound } from "../config/Variable"
+import { defaultBoxColor, defaultBoxColorOpened, defaultBoxKey, defaultCurrFrame, defaultDeleteShortCut, defaultEightBound, defaultIsBoxSelected, defaultPaintShortCut, defaultSixteenBound } from "../config/Variable"
 import { useKeyPressed } from "../hooks/KeyPressed"
 import { useFetchColorLocalStorage } from "../hooks/LocalStorages"
 import { LED } from "../model/LED"
 
 export default function FloatingColor() {
 
+    
     const indexContext = useContext(IndexContext)
     const [ColorInput, setColorInput] = useState(defaultBoxColor)
     const {ColorValue} = useFetchColorLocalStorage(indexContext.BoxKey)    
-
+    
     useKeyPressed('keydown', 
         useCallback((e:any) => {
             const buff = e as KeyboardEvent
@@ -54,10 +55,6 @@ export default function FloatingColor() {
         }
     }, [indexContext.IsPaintShortCut, indexContext.IsBoxSelected, indexContext.BoxKey])
 
-    useEffect(() => {
-        const currIndex = indexContext.IsEightByEight ? defaultEightBound : defaultSixteenBound
-    }, [])  
-    
     const handleClickSave = () => {
         indexContext.setColorBox!(ColorInput)
         const currentSavedColor = new LED(indexContext.BoxKey, ColorInput)
@@ -82,6 +79,9 @@ export default function FloatingColor() {
         indexContext.frameSixteen?.refetch()
     }
 
+    useEffect(() => {
+        if(!(indexContext.IsBoxColor === false || indexContext.IsPaintShortCut === true))setColorInput(ColorValue !== null ? ColorValue : defaultBoxColor)
+    })
 
     return <>
             <div className="absolute-float flex-column-end">

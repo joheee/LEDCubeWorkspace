@@ -19,7 +19,6 @@ export function PhotoModal() {
     function handleImageChange(image:FileList){
         const canvas = canvasRef.current 
         const currFile = image[0]
-        console.log(currFile)
         indexContext.SetPhoto!(URL.createObjectURL(currFile))
         if(canvas) drawDataURIOnCanvas(URL.createObjectURL(currFile), canvas!, indexContext)
     }
