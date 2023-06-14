@@ -52,18 +52,18 @@ export function useSaveFrame(){
                                 y:j,
                                 z:k
                             },
-                            });
+                        })
                     } else {
                         await set(ref(realtimeDatabase, 'ledState/' + ANIMATION_NAME + `/${a}`), {
                             attribute: {
-                                r:each.attribute?.red,
-                                g:each.attribute?.green,
-                                b:each.attribute?.blue,
+                                r:each.attribute?.red === 0 ? each.attribute?.red  + 2 : each.attribute?.red,
+                                g:each.attribute?.green === 0 ? each.attribute?.green  + 2 : each.attribute?.green ,
+                                b:each.attribute?.blue === 0 ? each.attribute?.blue + 2 : each.attribute?.blue,
                                 x:i,
                                 y:j,
                                 z:k
                             },
-                        });
+                        })
                     }
                     a++
                 }
