@@ -5,7 +5,7 @@ import { db, realtimeDatabase } from "../config/Firebase";
 import { defaultBoxIndex, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
 import { BoxFrameInterface, useFetchFramesLocalStorage } from "./LocalStorages";
 import toast from 'react-hot-toast'
-import { ref, set } from "firebase/database";
+import { ref, set, update } from "firebase/database";
 
 export function useSaveFrame(){
     const indexContext = useContext(IndexContext)
@@ -36,49 +36,54 @@ export function useSaveFrame(){
         }
         
         let a = 0
+        let obj = []
         // put to rtdb
         for(let i=0;i<8;i++){
             for(let j=0;j<8;j++){
                 for(let k=0;k<8;k++){
                     const each = findBoxes(boxes.Frames[0],i,j,k)
+                    // console.log('ledState/' + `${a < 255 ? ANIMATION_NAME : "frame_cenah2"}` + `/${a}`)
+
                     if(each == null) {
-                        await set(ref(realtimeDatabase, 'ledState/' + ANIMATION_NAME + `/${a}`), {
-                            attribute: {
+                        obj.push({
                                 r:0,
                                 g:0,
                                 b:0,
                                 x:i,
                                 y:j,
                                 z:k
-                            },
                         })
-                    } else {
-                        await set(ref(realtimeDatabase, 'ledState/' + ANIMATION_NAME + `/${a}`), {
-                            attribute: {
+                        
+                    } 
+                    else {
+                        obj.push({
                                 r:Math.ceil(each.attribute?.red! / 16),
                                 g:Math.ceil(each.attribute?.green! / 16),
                                 b:Math.ceil(each.attribute?.blue! / 16),
                                 x:i,
                                 y:j,
                                 z:k
-                            },
                         })
                     }
                     a++
                 }
             }
         }
-
-        setIsLoading(false)
-        toast.success(`Success upload animation!`)
+        
         
         // put to firebase
-        // await setDoc(doc(db, COLLECTION_KEY, ANIMATION_NAME), {
-            //     display:boxes.Frames
-            // })
-        // .then(() => {
+        await setDoc(doc(db, 'testing_frame', ANIMATION_NAME), {
+            array:obj
+        })
+        .then(() => {
+            update(ref(realtimeDatabase, 'ledState/'), {
+                'frame_cenah':false
+            }).then(() => {
+                toast.success(`Success upload animation!`)
+                setIsLoading(false)
+            })
             // toast.success(`Success upload ${ANIMATION_NAME}`)
-        // })
+        })
     }
 
     return { handleSave }
