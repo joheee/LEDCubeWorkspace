@@ -71,13 +71,14 @@ export function useSaveFrame(){
         }
 
         setIsLoading(false)
-
+        toast.success(`Success upload animation!`)
+        
         // put to firebase
         // await setDoc(doc(db, COLLECTION_KEY, ANIMATION_NAME), {
-        //     display:boxes.Frames
-        // })
+            //     display:boxes.Frames
+            // })
         // .then(() => {
-        //     toast.success(`Success upload ${ANIMATION_NAME}`)
+            // toast.success(`Success upload ${ANIMATION_NAME}`)
         // })
     }
 
