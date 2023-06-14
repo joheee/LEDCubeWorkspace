@@ -36,7 +36,6 @@ export function useSaveFrame(){
         }
         
         let a = 0
-
         // put to rtdb
         for(let i=0;i<8;i++){
             for(let j=0;j<8;j++){
@@ -56,9 +55,9 @@ export function useSaveFrame(){
                     } else {
                         await set(ref(realtimeDatabase, 'ledState/' + ANIMATION_NAME + `/${a}`), {
                             attribute: {
-                                r:each.attribute?.red === 0 ? each.attribute?.red  + 2 : each.attribute?.red,
-                                g:each.attribute?.green === 0 ? each.attribute?.green  + 2 : each.attribute?.green ,
-                                b:each.attribute?.blue === 0 ? each.attribute?.blue + 2 : each.attribute?.blue,
+                                r:Math.ceil(each.attribute?.red! / 16),
+                                g:Math.ceil(each.attribute?.green! / 16),
+                                b:Math.ceil(each.attribute?.blue! / 16),
                                 x:i,
                                 y:j,
                                 z:k
