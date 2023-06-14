@@ -22,7 +22,6 @@ export interface BoxFrameInterface {
     frame:number,
     box?:BoxInterface[]
 }
-  
 
 export function useFetchColorLocalStorage(key:string){
     const [ColorValue, setColorValue] = useState<string | null>(defaultBoxColor)
@@ -139,9 +138,9 @@ function componentToHex(c:number) {
     return hex.length == 1 ? "0" + hex : hex;
   }
   
-  function rgbToHex(r:number, g:number, b:number) {
+function rgbToHex(r:number, g:number, b:number) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-  }
+}
 export function drawDataURIOnCanvas(strDataURI:string, canvas:HTMLCanvasElement, indexContext:IndexContextInterface) {
     var img = new window.Image()
     img.addEventListener("load", function () {

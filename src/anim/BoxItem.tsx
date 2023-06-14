@@ -35,7 +35,7 @@ export default function Box(props: BoxItemInterface) {
   }
 
   const boxRef = useRef<any>()
-  
+    
   return (
     <mesh ref={boxRef}
       position={position}

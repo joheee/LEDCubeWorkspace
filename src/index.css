@@ -264,7 +264,14 @@ button:hover {
     border-radius: .5rem;
     display: flex;
     gap: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.button-save {
+    width: 100%;
+}
+
+.button-save {
+    height: 4rem;
 }
 
 .grid-four-columns {

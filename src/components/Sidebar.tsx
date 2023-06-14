@@ -2,8 +2,9 @@ import { HexColorPicker } from "react-colorful"
 import { useContext, useEffect, useState } from "react"
 import { LayerTotalEight, LayerTotalSixteen } from "../config/Mapping"
 import { IndexContext } from "../config/Context"
-import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY, defaultCurrFrame} from "../config/Variable"
+import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY, defaultCurrFrame, DEFAULT_OFF_OPACITY_KEY} from "../config/Variable"
 import { clearAllColorInFrame, useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
+import { useSaveFrame } from "../hooks/SaveFrame"
 
 export default function Sidebar() {
 
@@ -24,6 +25,15 @@ export default function Sidebar() {
     setState:indexContext.setOpacity!,
     defaultValue:defaultBoxOpacity
   })
+
+  // FETCH OFF OPACITY
+  useFetchDynamicLocalStorage({
+    localStorageKey:DEFAULT_OFF_OPACITY_KEY,
+    state:indexContext.OffOpacity,
+    setState:indexContext.setOffOpacity!,
+    defaultValue:defaultBoxOpacity
+  })
+
 
   // FETCH BOX SPACING
   useFetchDynamicLocalStorage({
@@ -88,7 +98,7 @@ export default function Sidebar() {
         <>
           <div className="grid-two-column-center">
             <div className="">
-              <div className="text-center">box {indexContext.OffOpacity / 100}</div>
+              <div className="text-center">off {indexContext.OffOpacity / 100}</div>
               <input
                 type="range"
                 value={indexContext.OffOpacity}
@@ -100,7 +110,7 @@ export default function Sidebar() {
                 />
             </div>
             <div className="">
-              <div className="text-center">off {indexContext.Opacity / 100}</div>
+              <div className="text-center">box {indexContext.Opacity / 100}</div>
               <input
                 type="range"
                 value={indexContext.Opacity}
@@ -157,7 +167,7 @@ export default function Sidebar() {
             </div>
 
           <div className="sidebar-two-grid">
-            <button disabled={indexContext.IsDeactivate}>save</button>
+            <button disabled={indexContext.IsDeactivate} onClick={() => indexContext.SetIsSaveModal!(true)}>save</button>
             <button
               disabled={indexContext.IsDeactivate}
               onClick={() =>

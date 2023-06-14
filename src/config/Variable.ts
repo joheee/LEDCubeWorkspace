@@ -9,8 +9,9 @@ export const defaultBoxColorOpened = false
 export const defaultBoxKey = '999'
 
 export const defaultBoxOpacityMax = 100
-export const defaultBoxOpacityOffset = 0.7
+export const defaultBoxOpacityOffset = 20
 export const defaultIsPhotoModal = false
+export const defaultIsSaveModal = false
 export const defaultBackroundColor = '#000000'
 
 export const defaultIsDeactivate = false
@@ -37,4 +38,5 @@ export const FRAME_16_KEY = 'LAMBDA_16'
 export const FRAME_8_KEY = 'LAMBDA_8'
 export const DEFAULT_BACKGROUND_COLOR_KEY = 'default-background-color'
 export const DEFAULT_OPACITY_KEY = 'default-opacity'
+export const DEFAULT_OFF_OPACITY_KEY = 'default-off-opacity'
 export const DEFAULT_BOX_SPACING_KEY = 'default-box-spacing-key'

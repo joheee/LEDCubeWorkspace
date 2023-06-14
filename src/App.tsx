@@ -1,12 +1,14 @@
 import { useState } from "react"
 import FloatingColor from "./components/FloatingColor"
 import { PhotoModal } from "./components/PhotoModal"
+import { SaveModal } from "./components/SaveModal"
 import Sidebar from "./components/Sidebar"
 import ThreeRender from "./components/ThreeRender"
 import Topbar from "./components/Topbar"
 import { IndexContext } from "./config/Context"
-import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsDeactivate, defaultIsEightByEight, defaultIsPhotoModal, defaultOffset, defaultPaintShortCut, defaultPhoto, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
+import { defaultBackroundColor, defaultBoxColor, defaultBoxColorOpened, defaultBoxIndex, defaultBoxKey, defaultBoxOpacity, defaultCurrFrame, defaultDeleteShortCut, defaultIsBoxSelected, defaultIsDeactivate, defaultIsEightByEight, defaultIsPhotoModal, defaultIsSaveModal, defaultOffset, defaultPaintShortCut, defaultPhoto, defaultRefreshFrame, FRAME_16_KEY, FRAME_8_KEY } from "./config/Variable"
 import { useFetchFramesLocalStorage } from "./hooks/LocalStorages"
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -32,6 +34,7 @@ function App() {
 
   // PHOTO MODAL
   const [isPhotoModal, setIsPhotoModal] = useState<boolean>(defaultIsPhotoModal)
+  const [isSaveModal, SetIsSaveModal] = useState<boolean>(defaultIsSaveModal)
 
   // BACKGROUND COLOR
   const [ColorBackground,setColorBackground] = useState<string>(defaultBackroundColor)
@@ -80,16 +83,22 @@ function App() {
     IsDeactivate, 
     setIsDeactivate,
     Photo, SetPhoto,
-    OffOpacity, setOffOpacity
+    OffOpacity, setOffOpacity,
+    isSaveModal, SetIsSaveModal
   }
 
   return (
     <IndexContext.Provider value={val}>
         <PhotoModal/>
+        <SaveModal/>
         <Sidebar/>
         <Topbar/>
         <ThreeRender/>
         <FloatingColor/>
+        <Toaster
+          position="bottom-center"
+          reverseOrder={false}
+        />
     </IndexContext.Provider>
   )
 }
