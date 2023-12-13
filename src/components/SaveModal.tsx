@@ -31,7 +31,7 @@ export function SaveModal() {
                             <div className="">save current animations</div>
                             <button onClick={() => indexContext.SetIsSaveModal!(!indexContext.isSaveModal)}>x</button>
                         </div>
-                        {/* <input onChange={e => setAnimation(e.target.value)} className="input-styling button-save" type='text' placeholder="give a name for your animation"/> */}
+                        <input onChange={e => setAnimation(e.target.value)} className="input-styling button-save" type='text' placeholder="give a name for your animation"/>
                         <button disabled={indexContext.IsDeactivate} className="button-save" onClick={() => handleSave(animation, setIsLoading)}>save</button>
                     </> 
                 }

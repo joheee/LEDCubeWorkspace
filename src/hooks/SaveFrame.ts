@@ -26,7 +26,7 @@ export function useSaveFrame(){
 
     async function handleSave(ANIMATION_NAME:string, setIsLoading:(e:any)=>void){
         // hardcoded path
-        ANIMATION_NAME = 'frame_cenah'
+
         setIsLoading(true)
         
         if(ANIMATION_NAME === '') {
@@ -36,16 +36,15 @@ export function useSaveFrame(){
         }
         
         let a = 0
-        let obj = []
+        let objNormal = []
         // put to rtdb
         for(let i=0;i<8;i++){
             for(let j=0;j<8;j++){
                 for(let k=0;k<8;k++){
                     const each = findBoxes(boxes.Frames[0],i,j,k)
-                    // console.log('ledState/' + `${a < 255 ? ANIMATION_NAME : "frame_cenah2"}` + `/${a}`)
 
                     if(each == null) {
-                        obj.push({
+                        objNormal.push({
                                 r:0,
                                 g:0,
                                 b:0,
@@ -56,7 +55,7 @@ export function useSaveFrame(){
                         
                     } 
                     else {
-                        obj.push({
+                        objNormal.push({
                                 r:Math.ceil(each.attribute?.red! / 16),
                                 g:Math.ceil(each.attribute?.green! / 16),
                                 b:Math.ceil(each.attribute?.blue! / 16),
@@ -70,10 +69,17 @@ export function useSaveFrame(){
             }
         }
         
-        
-        // put to firebase
+        let fifKArray : number[] = []
+        objNormal.map(item => {
+            fifKArray.push(item.r)
+            fifKArray.push(item.g)
+            fifKArray.push(item.b)
+        })
+
+        const b64encoded = btoa(String.fromCharCode.apply(null, fifKArray))
+
         await setDoc(doc(db, 'testing_frame', ANIMATION_NAME), {
-            array:obj
+            array:b64encoded
         })
         .then(() => {
             update(ref(realtimeDatabase, 'ledState/'), {
@@ -82,7 +88,7 @@ export function useSaveFrame(){
                 toast.success(`Success upload animation!`)
                 setIsLoading(false)
             })
-            // toast.success(`Success upload ${ANIMATION_NAME}`)
+            toast.success(`Success upload ${ANIMATION_NAME}`)
         })
     }
 
