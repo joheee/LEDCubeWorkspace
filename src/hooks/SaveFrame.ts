@@ -25,7 +25,6 @@ export function useSaveFrame(){
     }
 
     async function handleSave(ANIMATION_NAME:string, setIsLoading:(e:any)=>void){
-        // hardcoded path
 
         setIsLoading(true)
         
@@ -37,7 +36,7 @@ export function useSaveFrame(){
         
         let a = 0
         let objNormal = []
-        // put to rtdb
+
         for(let i=0;i<8;i++){
             for(let j=0;j<8;j++){
                 for(let k=0;k<8;k++){
@@ -78,17 +77,12 @@ export function useSaveFrame(){
 
         const b64encoded = btoa(String.fromCharCode.apply(null, fifKArray))
 
-        await setDoc(doc(db, 'testing_frame', ANIMATION_NAME), {
-            array:b64encoded
+        await set(ref(realtimeDatabase, 'ledState/frame_cenah/' + ANIMATION_NAME), {
+            array:b64encoded,
         })
         .then(() => {
-            update(ref(realtimeDatabase, 'ledState/'), {
-                'frame_cenah':false
-            }).then(() => {
-                toast.success(`Success upload animation!`)
-                setIsLoading(false)
-            })
             toast.success(`Success upload ${ANIMATION_NAME}`)
+            setIsLoading(false)
         })
     }
 
