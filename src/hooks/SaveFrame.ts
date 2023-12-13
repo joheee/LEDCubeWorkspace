@@ -55,9 +55,9 @@ export function useSaveFrame(){
                     } 
                     else {
                         objNormal.push({
-                                r:Math.ceil(each.attribute?.red! / 16),
-                                g:Math.ceil(each.attribute?.green! / 16),
-                                b:Math.ceil(each.attribute?.blue! / 16),
+                                r:Math.floor(each.attribute?.red! / 16),
+                                g:Math.floor(each.attribute?.green! / 16),
+                                b:Math.floor(each.attribute?.blue! / 16),
                                 x:i,
                                 y:j,
                                 z:k
@@ -77,8 +77,8 @@ export function useSaveFrame(){
 
         const b64encoded = btoa(String.fromCharCode.apply(null, fifKArray))
 
-        await set(ref(realtimeDatabase, 'ledState/frame_cenah/' + ANIMATION_NAME), {
-            array:b64encoded,
+        await set(ref(realtimeDatabase, 'ledState/'), {
+            'frame_cenah':b64encoded,
         })
         .then(() => {
             toast.success(`Success upload ${ANIMATION_NAME}`)
