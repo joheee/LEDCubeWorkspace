@@ -5,7 +5,7 @@ import { db, realtimeDatabase } from "../config/Firebase";
 import { defaultBoxIndex, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
 import { BoxFrameInterface, useFetchFramesLocalStorage } from "./LocalStorages";
 import toast from 'react-hot-toast'
-import { ref, set, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 
 export function useSaveFrame(){
     const indexContext = useContext(IndexContext)
@@ -77,7 +77,7 @@ export function useSaveFrame(){
 
         const b64encoded = btoa(String.fromCharCode.apply(null, fifKArray))
 
-        await set(ref(realtimeDatabase, 'ledState/'), {
+        await update(ref(realtimeDatabase, 'ledState/'), {
             'frame_cenah':b64encoded,
         })
         .then(() => {
