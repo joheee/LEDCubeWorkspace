@@ -42,7 +42,7 @@ export function useSaveFrame(){
 
         for(let i=7;i>=0;i--){
             for(let j=0;j<8;j++){
-                for(let k=0;k<8;k++){
+                for(let k=7;k>=0;k--){
                     const each = findBoxes(boxes.Frames[indexContext.CurrFrame],k,i,j)
 
                     if(each == null) {
