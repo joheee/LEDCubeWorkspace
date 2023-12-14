@@ -1,5 +1,5 @@
 import { FRAME_16_KEY, FRAME_8_KEY, hexBound } from "../config/Variable"
-import { BoxFrameInterface, BoxInterface } from "../hooks/LocalStorages"
+import { BoxFrameInterface } from "../hooks/LocalStorages"
 
 export class LED {
     x:number
@@ -16,13 +16,14 @@ export class LED {
     
     extractRGB() {
         const hexCode = this.color.replace('#','')
+        console.log(hexCode)
         const red = parseInt(hexCode[0] + hexCode[1], hexBound)
-        const green = parseInt(hexCode[1] + hexCode[2], hexBound)
-        const blue = parseInt(hexCode[3] + hexCode[4], hexBound)
+        const green = parseInt(hexCode[2] + hexCode[3], hexBound)
+        const blue = parseInt(hexCode[4] + hexCode[5], hexBound)
         return {
-            'red':Math.round(red/hexBound),
-            'green':Math.round(green/hexBound),
-            'blue':Math.round(blue/hexBound)
+            'red':Math.round(red),
+            'green':Math.round(green),
+            'blue':Math.round(blue)
         }
     }
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { generateKey } from "../anim/BoxItem"
 import { FrameInterface, IndexContext, IndexContextInterface } from "../config/Context"
-import { defaultBoxColor, defaultEightBound, defaultFrameArray, defaultSixteenBound, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
+import { defaultBoundaries, defaultBoxColor, defaultEightBound, defaultFrameArray, defaultSixteenBound, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
 
 export interface BoxAttributeInterface {
     x: number,
@@ -157,7 +157,7 @@ export function drawDataURIOnCanvas(strDataURI:string, canvas:HTMLCanvasElement,
         if(boxFrame){
             if(indexContext.IsEightByEight) {
                 let currBoxFrame : BoxInterface[] = []
-                for(let j=0;j<defaultEightBound;j++){
+                for(let j=0;j<defaultEightBound / defaultBoundaries;j++){
                     imageArray.forEach((item,i) => {
                         let boxes : BoxInterface = {}
                         boxes.attribute = {
@@ -179,7 +179,7 @@ export function drawDataURIOnCanvas(strDataURI:string, canvas:HTMLCanvasElement,
                 boxFrame.refetch()
             } else {
                 let currBoxFrame : BoxInterface[] = []
-                for(let j=0;j<defaultSixteenBound;j++){
+                for(let j=0;j<defaultSixteenBound  / (defaultBoundaries*2);j++){
                     imageArray.forEach((item,i) => {
                         let boxes : BoxInterface = {}
                         boxes.attribute = {

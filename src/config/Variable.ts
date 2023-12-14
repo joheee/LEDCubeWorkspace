@@ -21,6 +21,7 @@ export const hexBound = 16
 
 // SET IF 8X8X8 OR 16X16X16
 export const defaultIsEightByEight = true
+export const defaultBoundaries = 8
 export const defaultEightBound = 8
 export const defaultSixteenBound = 16
 // FRAME VARIABLE
