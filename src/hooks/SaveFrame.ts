@@ -1,23 +1,22 @@
-import { doc, setDoc } from "@firebase/firestore";
 import { useContext } from "react"
 import { IndexContext } from "../config/Context"
-import { db, realtimeDatabase } from "../config/Firebase";
-import { defaultBoxIndex, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
+import { realtimeDatabase } from "../config/Firebase";
+import { FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable";
 import { BoxFrameInterface, useFetchFramesLocalStorage } from "./LocalStorages";
 import toast from 'react-hot-toast'
 import { ref, update } from "firebase/database";
 
 export function useSaveFrame(){
-    const indexContext = useContext(IndexContext)
 
+    const indexContext = useContext(IndexContext)
     const COLLECTION_KEY = indexContext.IsEightByEight ? FRAME_8_KEY : FRAME_16_KEY
     const boxes = useFetchFramesLocalStorage(COLLECTION_KEY)
     
     function findBoxes(box:BoxFrameInterface,b:number,j:number,k:number)  {
         const boxes = box.box
-
+        
         if(boxes === undefined) return
-
+        
         for(let i=0;i<boxes!.length;i++){
             const each = boxes![i]
             if(each.attribute?.x===b && each.attribute?.y===j && each.attribute?.z===k) {
@@ -26,24 +25,15 @@ export function useSaveFrame(){
         }
         return null
     }
-
-    async function handleSave(ANIMATION_NAME:string, setIsLoading:(e:any)=>void){
-
-        setIsLoading(true)
-        
-        // if(ANIMATION_NAME === '') {
-        //     setIsLoading(false)
-        //     toast.error('animation name must be filled!')
-        //     return
-        // }
-        
+    
+    function convertB64Encoded(frame:BoxFrameInterface[], currFrame?: number|null) {
         let a = 0
         let objNormal = []
-
+        
         for(let i=7;i>=0;i--){
             for(let j=0;j<8;j++){
                 for(let k=7;k>=0;k--){
-                    const each = findBoxes(boxes.Frames[indexContext.CurrFrame],k,i,j)
+                    const each = findBoxes(frame[currFrame === undefined ? indexContext.CurrFrame : currFrame!],k,i,j)
 
                     if(each == null) {
                         objNormal.push({
@@ -72,15 +62,20 @@ export function useSaveFrame(){
             fifKArray.push(item.b)
         })
 
-        const b64encoded = btoa(String.fromCharCode.apply(null, fifKArray))
+        return btoa(String.fromCharCode.apply(null, fifKArray))
+    }
 
+    async function handleSave(setIsLoading:(e:any)=>void, currFrame?: number|null){
+
+        setIsLoading(true)
+        
         await update(ref(realtimeDatabase, 'ledState/'), {
-            'frame_cenah':b64encoded,
+            'frame_cenah':convertB64Encoded(boxes.Frames, currFrame),
             on:true,
             selected:'frame_cenah'
         })
         .then(() => {
-            toast.success(`Success upload ${ANIMATION_NAME}`)
+            toast.success(`Success upload animation`)
             setIsLoading(false)
         })
     }

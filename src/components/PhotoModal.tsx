@@ -1,12 +1,15 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useRef } from "react"
 import { IndexContext } from "../config/Context"
-import { defaultEightBound, defaultIsPhotoModal, defaultSixteenBound } from "../config/Variable"
+import { defaultIsPhotoModal } from "../config/Variable"
 import { useKeyPressed } from "../hooks/KeyPressed"
-import { BoxFrameInterface, drawDataURIOnCanvas } from "../hooks/LocalStorages"
+import { drawDataURIOnCanvas } from "../hooks/LocalStorages"
+import { useTopBarHook } from "../hooks/TopBarHook"
 
 
 export function PhotoModal() {
+    
     const indexContext = useContext(IndexContext)
+
     useKeyPressed('keydown', 
         useCallback((e:any) => {
             const buff = e as KeyboardEvent

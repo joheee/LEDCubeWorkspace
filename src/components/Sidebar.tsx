@@ -4,7 +4,6 @@ import { LayerTotalEight, LayerTotalSixteen } from "../config/Mapping"
 import { IndexContext } from "../config/Context"
 import { DEFAULT_BACKGROUND_COLOR_KEY, defaultBackroundColor, defaultBoxOpacityMax, maxOffset, DEFAULT_OPACITY_KEY, defaultBoxOpacity, DEFAULT_BOX_SPACING_KEY, defaultOffset, FRAME_8_KEY, FRAME_16_KEY, defaultCurrFrame, DEFAULT_OFF_OPACITY_KEY} from "../config/Variable"
 import { clearAllColorInFrame, useFetchDynamicLocalStorage } from "../hooks/LocalStorages"
-import { useSaveFrame } from "../hooks/SaveFrame"
 
 export default function Sidebar() {
 

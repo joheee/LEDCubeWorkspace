@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { generateKey } from "../anim/BoxItem"
 import { FrameInterface, IndexContext, IndexContextInterface } from "../config/Context"
 import { defaultBoundaries, defaultBoxColor, defaultEightBound, defaultFrameArray, defaultSixteenBound, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
+import { useTopBarHook } from "./TopBarHook"
 
 export interface BoxAttributeInterface {
     x: number,
@@ -136,13 +137,63 @@ interface ImageDataInterface {
 function componentToHex(c:number) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
-  }
+}
   
 function rgbToHex(r:number, g:number, b:number) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
+
+function putImageToBoxEight(imageArray : ImageDataInterface[], dimension:number, boxFrame : FrameInterface|undefined, indexContext:IndexContextInterface) {
+    let currBoxFrame : BoxInterface[] = []
+    for(let j=0;j<defaultEightBound / defaultBoundaries;j++){
+        imageArray.forEach((item,i) => {
+            let boxes : BoxInterface = {}
+            boxes.attribute = {
+                x:Math.floor(i/dimension),
+                y:i%dimension,
+                z:j,
+                hexColor:rgbToHex(item.data[0],item.data[1],item.data[2]),
+                red:item.data[0],
+                green:item.data[1],
+                blue:item.data[2]
+            }
+            boxes.boxKey = generateKey([boxes.attribute.x,boxes.attribute.y,boxes.attribute.z])
+            currBoxFrame.push(boxes)
+        })
+    }
+    boxFrame!.Frames[indexContext.CurrFrame].box = currBoxFrame
+    const currFrameKey = indexContext.IsEightByEight ? FRAME_8_KEY:FRAME_16_KEY
+    localStorage.setItem(currFrameKey, JSON.stringify(boxFrame!.Frames))
+    boxFrame!.refetch()
+}
+
+function putImageToBoxSixteen(imageArray : ImageDataInterface[], dimension:number, boxFrame : FrameInterface|undefined, indexContext:IndexContextInterface) {
+    let currBoxFrame : BoxInterface[] = []
+    for(let j=0;j<defaultSixteenBound  / (defaultBoundaries*2);j++){
+        imageArray.forEach((item,i) => {
+            let boxes : BoxInterface = {}
+            boxes.attribute = {
+                x:Math.floor(i/dimension),
+                y:i%dimension,
+                z:j,
+                hexColor:rgbToHex(item.data[0],item.data[1],item.data[2]),
+                red:item.data[0],
+                green:item.data[1],
+                blue:item.data[2]
+            }
+            boxes.boxKey = generateKey([boxes.attribute.x,boxes.attribute.y,boxes.attribute.z])
+            currBoxFrame.push(boxes)
+        })
+    }
+    boxFrame!.Frames[indexContext.CurrFrame].box = currBoxFrame
+    const currFrameKey = indexContext.IsEightByEight ? FRAME_8_KEY:FRAME_16_KEY
+    localStorage.setItem(currFrameKey, JSON.stringify(boxFrame!.Frames))
+    boxFrame!.refetch()
+}
+
 export function drawDataURIOnCanvas(strDataURI:string, canvas:HTMLCanvasElement, indexContext:IndexContextInterface) {
     var img = new window.Image()
+    const {handleCreateFrame} = useTopBarHook(indexContext)
     img.addEventListener("load", function () {
 
         const context =canvas.getContext("2d")
@@ -156,49 +207,9 @@ export function drawDataURIOnCanvas(strDataURI:string, canvas:HTMLCanvasElement,
         let boxFrame : FrameInterface|undefined = indexContext.IsEightByEight ? indexContext.frameEight : indexContext.frameSixteen
         if(boxFrame){
             if(indexContext.IsEightByEight) {
-                let currBoxFrame : BoxInterface[] = []
-                for(let j=0;j<defaultEightBound / defaultBoundaries;j++){
-                    imageArray.forEach((item,i) => {
-                        let boxes : BoxInterface = {}
-                        boxes.attribute = {
-                            x:Math.floor(i/dimension),
-                            y:i%dimension,
-                            z:j,
-                            hexColor:rgbToHex(item.data[0],item.data[1],item.data[2]),
-                            red:item.data[0],
-                            green:item.data[1],
-                            blue:item.data[2]
-                        }
-                        boxes.boxKey = generateKey([boxes.attribute.x,boxes.attribute.y,boxes.attribute.z])
-                        currBoxFrame.push(boxes)
-                    })
-                }
-                boxFrame.Frames[indexContext.CurrFrame].box = currBoxFrame
-                const currFrameKey = indexContext.IsEightByEight ? FRAME_8_KEY:FRAME_16_KEY
-                localStorage.setItem(currFrameKey, JSON.stringify(boxFrame.Frames))
-                boxFrame.refetch()
+                putImageToBoxEight(imageArray, dimension, boxFrame, indexContext)
             } else {
-                let currBoxFrame : BoxInterface[] = []
-                for(let j=0;j<defaultSixteenBound  / (defaultBoundaries*2);j++){
-                    imageArray.forEach((item,i) => {
-                        let boxes : BoxInterface = {}
-                        boxes.attribute = {
-                            x:Math.floor(i/dimension),
-                            y:i%dimension,
-                            z:j,
-                            hexColor:rgbToHex(item.data[0],item.data[1],item.data[2]),
-                            red:item.data[0],
-                            green:item.data[1],
-                            blue:item.data[2]
-                        }
-                        boxes.boxKey = generateKey([boxes.attribute.x,boxes.attribute.y,boxes.attribute.z])
-                        currBoxFrame.push(boxes)
-                    })
-                }
-                boxFrame.Frames[indexContext.CurrFrame].box = currBoxFrame
-                const currFrameKey = indexContext.IsEightByEight ? FRAME_8_KEY:FRAME_16_KEY
-                localStorage.setItem(currFrameKey, JSON.stringify(boxFrame.Frames))
-                boxFrame.refetch()
+                putImageToBoxSixteen(imageArray, dimension, boxFrame, indexContext)
             }
         }
     })

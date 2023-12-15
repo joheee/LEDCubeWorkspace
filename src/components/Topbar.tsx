@@ -1,8 +1,8 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { FrameInterface, IndexContext, IndexContextInterface } from "../config/Context"
-import { defaultCurrFrame, FRAME_16_KEY, FRAME_8_KEY } from "../config/Variable"
-import { BoxFrameInterface, clearFrame } from "../hooks/LocalStorages"
+import { BoxFrameInterface } from "../hooks/LocalStorages"
 import { usePlayFrame } from "../hooks/PlayFrame"
+import { useTopBarHook } from "../hooks/TopBarHook"
 
 
 function TopBarCard(prop:BoxFrameInterface) {
@@ -21,38 +21,9 @@ export default function Topbar() {
     const frameEight = indexContext.frameEight!
     const frameSixteen = indexContext.frameSixteen!
 
-    function injectFrame(frame:string, arr:BoxFrameInterface[]){
-        if(arr.length === 0) localStorage.setItem(frame, JSON.stringify([{frame:0}]))
-        else {
-            let res = [] as BoxFrameInterface[]
-            arr.forEach(item => {
-                res.push(item)
-            })
-            res.push({frame:arr.length})
-            localStorage.setItem(frame,JSON.stringify(res))
-        }
-        indexContext.setCurrFrame!(arr.length)
-    }
+    const {handleCreateFrame, handleDeleteFrame} = useTopBarHook(indexContext)
 
-    function handleCreateFrame() {
-        if(indexContext.IsEightByEight) {
-            injectFrame(FRAME_8_KEY, frameEight.Frames) 
-            frameEight.refetch()
-        }
-        else {
-            injectFrame(FRAME_16_KEY, frameSixteen.Frames)
-            frameSixteen.refetch()
-        }
-    } 
-
-    const {triggerPlay} = usePlayFrame(100);
-    function handlePlayFrame() {
-        triggerPlay()
-    }
-
-    function handleDeleteFrame() {
-        clearFrame(indexContext)
-    }
+    const {triggerPlay} = usePlayFrame(500);
 
     return (
         <div className="topbar-container topbar-grid">
@@ -82,7 +53,7 @@ export default function Topbar() {
                 }
                 <div className="topbar-card">
                     <button onClick={handleCreateFrame}>+</button>
-                    <button onClick={() => handlePlayFrame()}>play</button>
+                    <button onClick={triggerPlay}>play</button>
                 </div>
             </div>
         </div>
